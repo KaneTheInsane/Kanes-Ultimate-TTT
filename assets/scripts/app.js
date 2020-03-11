@@ -8,27 +8,65 @@
 
 $(() => {
   // your JS code goes here
-let turn = 'x'
+  const gameState = ['', '', '', '', '', '', '', '', '']
+  let turn = 'x'
+  let gameOver = false
+  const winCondition = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [0, 4, 8], [2, 5, 8], [0, 4, 7], [2, 4, 6]]
 
-  const fillSpace = function (turn, space) {
-    if (space !== 'x' || 'o') {
-      if (turn === 'x') {
-        $(space).text('x')
-        let turn = 'o'
-      } else {
-        $(space).text('o')
-        let turn = 'x'
+  const fillSpace = function (event) {
+    console.log('working')
+    event.preventDefault()
+    // get the position in the aray that they moved to
+    const position = event.target.id
+    console.log('clicked ' + position)
+    // get the curent text of the space the y chose
+    const space = $(event.target).text()
+    console.log(space)
+    // if space is open
+    if (space !== 'x' && space !== 'o' && gameOver === false) {
+      console.log('valid space ' + '(' + space + ')')
+      // add them to the boad
+      $(event.target).text(turn)
+      gameState.splice(position, 1, turn)
+      // check for winner
+      if ((gameState[0] === 'x' && gameState[1] === 'x' && gameState[2] === 'x') ||
+(gameState[3] === 'x' && gameState[4] === 'x' && gameState[5] === 'x') ||
+(gameState[6] === 'x' && gameState[7] === 'x' && gameState[8] === 'x') ||
+(gameState[0] === 'x' && gameState[3] === 'x' && gameState[6] === 'x') ||
+(gameState[0] === 'x' && gameState[4] === 'x' && gameState[8] === 'x') ||
+(gameState[2] === 'x' && gameState[5] === 'x' && gameState[8] === 'x') ||
+(gameState[0] === 'x' && gameState[4] === 'x' && gameState[7] === 'x') ||
+(gameState[2] === 'x' && gameState[4] === 'x' && gameState[6] === 'x')) {
+        console.log('game over')
+        gameOver = true
+        $('#Game').text('X is the Winner!')
+      } else if
+      ((gameState[0] === 'o' && gameState[1] === 'o' && gameState[2] === 'o') ||
+(gameState[3] === 'o' && gameState[4] === 'o' && gameState[5] === 'o') ||
+(gameState[6] === 'o' && gameState[7] === 'o' && gameState[8] === 'o') ||
+(gameState[0] === 'o' && gameState[3] === 'o' && gameState[6] === 'o') ||
+(gameState[0] === 'o' && gameState[4] === 'o' && gameState[8] === 'o') ||
+(gameState[2] === 'o' && gameState[5] === 'o' && gameState[8] === 'o') ||
+(gameState[0] === 'o' && gameState[4] === 'o' && gameState[7] === 'o') ||
+(gameState[2] === 'o' && gameState[4] === 'o' && gameState[6] === 'o')) {
+        console.log('game over')
+        gameOver = true
+        $('#Game').text('O is the Winner!')
       }
+      // winStates.forEach()
+      // change the turn
+      console.log(gameState)
+      if (turn === 'x') {
+        turn = 'o'
+      } else {
+        turn = 'x'
+      }
+    } else if (gameOver === true) {
+      $('#message').text('Game is over')
+    } else {
+      $('#message').text('invalid move')
     }
   }
 
-  $('#index-1').on('click', fillSpace(turn, '#index-1'))
-  $('#index-2').on('click', function () { console.log('clicked box 2') })
-  $('#index-3').on('click', function () { console.log('clicked box 3') })
-  $('#index-4').on('click', function () { console.log('clicked box 4') })
-  $('#index-5').on('click', function () { console.log('clicked box 5') })
-  $('#index-6').on('click', function () { console.log('clicked box 6') })
-  $('#index-7').on('click', function () { console.log('clicked box 7') })
-  $('#index-8').on('click', function () { console.log('clicked box 8') })
-  $('#index-9').on('click', function () { console.log('clicked box 9') })
+  $('.box').on('click', fillSpace)
 })
