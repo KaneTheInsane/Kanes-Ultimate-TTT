@@ -31,7 +31,7 @@
           <input type="submit" value="Sign in!">
         </fieldset>
       </form>
-      <form id="change-password" class="border">
+      <form id="change-password" class="border hidden">
         <fieldset>
           <legend>Change Password!</legend>
           <input type="password" name="passwords[old]" placeholder="Old Password">
@@ -39,10 +39,13 @@
           <input type="submit" value="Change Password!">
         </fieldset>
       </form>
-      <form id="sign-out" class="border">
+      <form id="sign-out" class="border hidden">
         <input type="submit" value="Sign Out">
       </form>
       <h2 id='message'></h2>
+      <form id='new-game' class="hidden">
+      <input type="submit" value="New Game">
+      </form>
       <div class="container hidden">
           <div class="row">
             <div id="0" class="col-4 box">
@@ -75,8 +78,9 @@
       </div>
     </div>
     <h2 id='Game'></h2>
-    <form id='new-game'>
-    <input type="submit" value="New Game">
-  </form>
+    <form id='game-count' class="hidden">
+    <input type="submit" value="Game Count">
+    </form>
+    <p id='count' class="hidden"></p>
     </body>
 </html>

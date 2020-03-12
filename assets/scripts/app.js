@@ -3,6 +3,7 @@
 // use require with a reference to bundle the file and use it in this file
 // const example = require('./example')
 const store = require('./store')
+const authEvents = require('./auth/events.js')
 // use require without a reference to ensure a file is bundled
 // require('./example')
 
@@ -18,7 +19,11 @@ $(() => {
       turn = 'X'
     }
   }
-
+  const showCount = function (event) {
+    event.preventDefault()
+    $('#count').text(gameCount)
+    $('#count').removeClass('hidden')
+  }
   const winner = function () {
     store.gameOver = true
     $('#Game').text(turn + ' is the winner')
@@ -36,6 +41,7 @@ $(() => {
     if ((store.gameState.every(v => v !== '')) && (store.gameOver === false)) {
       $('#Game').text('Draw!')
       store.gameOver = true
+      gameCount += 1
     }
   }
 
@@ -43,6 +49,8 @@ $(() => {
     event.preventDefault()
     $('.container').removeClass('hidden')
     $('.box').text('')
+    $('.box').removeClass('x')
+    $('.box').removeClass('o')
     $('#Game').text('')
     $('#message').text('')
     store.gameState = ['', '', '', '', '', '', '', '', '']
@@ -59,6 +67,11 @@ $(() => {
     if (space !== 'X' && space !== 'O' && store.gameOver === false) {
       // add them to the boad
       $(event.target).text(turn)
+      if (turn === 'X') {
+        $(event.target).addClass('x')
+      } else {
+        $(event.target).addClass('o')
+      }
       store.gameState.splice(position, 1, turn)
       console.log(store.gameState)
       // check for winner
@@ -77,7 +90,9 @@ $(() => {
 
   $('.box').on('click', fillSpace)
   $('#new-game').on('submit', newGame)
-  $('game-count').on('submit', function (){
-
-  })
+  $('#game-count').on('submit', showCount)
+  $('#sign-up').on('submit', authEvents.onSignUp)
+  $('#sign-in').on('submit', authEvents.onSignIn)
+  $('#change-password').on('submit', authEvents.onChangePassword)
+  $('#sign-out').on('submit', authEvents.onSignOut)
 })
