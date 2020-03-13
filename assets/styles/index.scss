@@ -1,12 +1,38 @@
 @import '~bootstrap/scss/bootstrap';
 
 $body-bg-color: teal;
+$accent-color: #340123;
 $secondary: black;
-$font-color: blue;
+$font-color: #fff;
 $alt-color: red;
+
+* {
+  justify-content: center;
+  text-align: center;
+}
 
 body {
   background-color: $body-bg-color;
+  // padding: 10px;
+}
+
+h1 {
+  color: $font-color;
+  padding: 20px;
+}
+
+footer {
+  background: $accent-color;
+  bottom: 0;
+  height: 60px;
+  position: absolute;
+  text-align: center;
+  width: 100%;
+}
+
+.accent {
+  background-color: $accent-color;
+  color: $font-color;
 }
 
 .box {
@@ -15,8 +41,9 @@ body {
   border: 1px solid $white;
   color: $font-color;
   display: flex;
-  height: 80px;
+  height: 100px;
   justify-content: center;
+  width: 100px;
 }
 
 .alt-color {
@@ -25,6 +52,10 @@ body {
 
 .hidden {
   display: none;
+}
+
+.button {
+  margin: 8px;
 }
 
 .x {

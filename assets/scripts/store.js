@@ -9,17 +9,19 @@ const winCondition = [
   [2, 4, 6],
   [0, 4, 8]]
 
-const gameState = ['', '', '', '', '', '', '', '', '']
-
-const gameOver = false
+const game = {
+  game: {
+    cells: ['', '', '', '', '', '', '', '', ''],
+    over: false
+  }
+}
 
 const store = {
 }
 
 module.exports = {
   winCondition,
-  gameState,
-  gameOver,
-  store
+  store,
+  game
 
 }

@@ -17,6 +17,7 @@ const signUpFailure = function (error) {
 }
 
 const signInSuccess = function (data) {
+  console.log(data)
   $('#message-2').text('Signed in successfully')
   $('#message-2').removeClass()
   $('#message-2').addClass('success')
@@ -28,6 +29,7 @@ const signInSuccess = function (data) {
   $('#sign-up').addClass('hidden')
   console.log('signInSuccess data is: ', data)
   store.user = data.user
+  console.log(store.user)
 }
 
 const signInFailure = function (error) {
@@ -76,6 +78,22 @@ const signOutFailure = function (error) {
   console.log('signOutFailure error is: ', error)
 }
 
+const newGameSuccess = function (gameData) {
+  console.log(gameData)
+  $('.container').removeClass('hidden')
+  $('.box').text('')
+  $('.box').removeClass('x')
+  $('.box').removeClass('o')
+  $('#Game').text('')
+  $('#message').text('')
+  store.game = gameData
+  console.log(gameData.game.id)
+  store.currentID = gameData.game.id
+}
+
+const newGameFailure = function () {
+  $('#message').text('')
+}
 module.exports = {
   signUpSuccess,
   signUpFailure,
@@ -84,5 +102,7 @@ module.exports = {
   changePasswordSuccess,
   changePasswordFailure,
   signOutSuccess,
-  signOutFailure
+  signOutFailure,
+  newGameSuccess,
+  newGameFailure
 }

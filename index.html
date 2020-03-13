@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-      <title>Example</title>
+      <title>Kane's Tic Tac Toe</title>
       <meta name="viewport" content="width=device-width, initial-scale=1">
 
       <!-- Do not add `link` tags-->
@@ -12,27 +12,27 @@
       <script src="public/application.js" type="text/javascript" charset="utf-8" defer></script>
     </head>
     <body>
-      <h1 id="test">Kane's Ultimate Tic Tac Toe</h1>
-      <footer>Test</footer>
+      <h1 class="accent">Kane's Ultimate Tic Tac Toe</h1>
+      <h2 id="message-2"></h2>
       <form id="sign-up" class="border">
-        <fieldset>
+        <fieldset class="user-input">
           <legend>Sign up!</legend>
-          <input type="text" name="credentials[email]" placeholder="Email">
-          <input type="password" name="credentials[password]" placeholder="Password">
-          <input type="password" name="credentials[password_confirmation]" placeholder="Confirm password">
-          <input type="submit" value="Sign up!">
+          <input type="text" name="credentials[email]" placeholder="Email"><br>
+          <input type="password" name="credentials[password]" placeholder="Password"><br>
+          <input type="password" name="credentials[password_confirmation]" placeholder="Confirm password"><br>
+          <input type="submit" value="Sign up!" class="button"><br>
         </fieldset>
       </form>
       <form id="sign-in" class="border">
-        <fieldset>
+        <fieldset class="user-input">
           <legend>Sign in!</legend>
-          <input type="text" name="credentials[email]" placeholder="Email">
-          <input type="password" name="credentials[password]" placeholder="Password">
-          <input type="submit" value="Sign in!">
+          <input type="text" name="credentials[email]" placeholder="Email"><br>
+          <input type="password" name="credentials[password]" placeholder="Password"><br>
+          <input type="submit" value="Sign in!" class="button"><br>
         </fieldset>
       </form>
       <form id="change-password" class="border hidden">
-        <fieldset>
+        <fieldset class="user-input">
           <legend>Change Password!</legend>
           <input type="password" name="passwords[old]" placeholder="Old Password">
           <input type="password" name="passwords[new]" placeholder="New Password">
@@ -40,11 +40,11 @@
         </fieldset>
       </form>
       <form id="sign-out" class="border hidden">
-        <input type="submit" value="Sign Out">
+        <input type="submit" value="Sign Out" class="button">
       </form>
       <h2 id='message'></h2>
       <form id='new-game' class="hidden">
-      <input type="submit" value="New Game">
+      <input type="submit" value="New Game" class="button">
       </form>
       <div class="container hidden">
           <div class="row">
@@ -82,5 +82,6 @@
     <input type="submit" value="Game Count">
     </form>
     <p id='count' class="hidden"></p>
+    <footer class="accent">Made by Kane Two Feathers</footer>
     </body>
 </html>

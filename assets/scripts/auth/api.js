@@ -2,6 +2,7 @@
 
 const config = require('../config')
 const store = require('../store')
+
 const signUp = function (data) {
   console.log('In api.js')
   return $.ajax({
