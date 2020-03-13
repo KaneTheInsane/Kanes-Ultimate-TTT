@@ -25,7 +25,7 @@ footer {
   background: $accent-color;
   bottom: 0;
   height: 60px;
-  position: absolute;
+  position: fixed;
   text-align: center;
   width: 100%;
 }
@@ -41,6 +41,7 @@ footer {
   border: 1px solid $white;
   color: $font-color;
   display: flex;
+  font-size: 15px;
   height: 100px;
   justify-content: center;
   width: 100px;
@@ -56,6 +57,10 @@ footer {
 
 .button {
   margin: 8px;
+}
+
+.bottom {
+  align-items: bottom;
 }
 
 .x {

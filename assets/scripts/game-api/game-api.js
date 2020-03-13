@@ -2,7 +2,6 @@ const config = require('../config')
 const store = require('../store')
 
 const createGame = function (gameData) {
-  console.log('In api.js')
   return $.ajax({
     url: config.apiUrl + '/games',
     method: 'POST',
@@ -14,8 +13,6 @@ const createGame = function (gameData) {
 }
 
 const updateGame = function (gameData) {
-  console.log('In api.js')
-  console.log(gameData)
   return $.ajax({
     url: config.apiUrl + '/games/' + store.currentID,
     method: 'PATCH',
@@ -27,7 +24,6 @@ const updateGame = function (gameData) {
 }
 
 const getSingleGame = function (id, data) {
-  console.log(data)
   return $.ajax({
     url: config.apiUrl + '/games/' + id,
     method: 'GET',

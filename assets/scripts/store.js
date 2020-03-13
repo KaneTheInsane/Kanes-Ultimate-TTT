@@ -19,9 +19,12 @@ const game = {
 const store = {
 }
 
+const guestAccount = false
+
 module.exports = {
   winCondition,
   store,
-  game
+  game,
+  guestAccount
 
 }

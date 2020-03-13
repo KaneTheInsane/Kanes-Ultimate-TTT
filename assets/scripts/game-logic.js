@@ -44,6 +44,7 @@ const checkDraw = function () {
 
 const newGame = function (event) {
   event.preventDefault()
+  turn = 'X'
   gameApi.createGame()
     .then(ui.newGameSuccess)
     .catch(ui.newGameFailure)
@@ -66,7 +67,7 @@ const fillSpace = function (event) {
       $(event.target).addClass('o')
     }
     store.game.game.cells.splice(position, 1, turn)
-    console.log(store.game.game.cells)
+    // console.log(store.game.game.cells)
     // check for winner
     if (checkWin() === true) {
       winner()
@@ -77,7 +78,7 @@ const fillSpace = function (event) {
   } else if (store.game.game.over === true) {
     $('#message').text('Game is over')
   } else {
-    $('#message').text('invalid move')
+    $('#message').text('Invalid move')
   }
 }
 
