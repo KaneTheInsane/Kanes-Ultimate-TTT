@@ -1,91 +1,122 @@
 <!DOCTYPE html>
 <html>
-    <head>
-      <title>Kane's Tic Tac Toe</title>
-      <meta name="viewport" content="width=device-width, initial-scale=1">
+  <head>
+    <title>Kane's Tic Tac Toe</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Oxanium&display=swap" rel="stylesheet">
+    <!-- Do not add `link` tags-->
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
 
-      <!-- Do not add `link` tags-->
-      <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
-
-      <!-- Do not add `script` tags-->
-      <script src="public/vendor.js" type="text/javascript" charset="utf-8" defer></script>
-      <script src="public/application.js" type="text/javascript" charset="utf-8" defer></script>
-    </head>
-    <body>
-      <h1 class="accent">Kane's Ultimate Tic Tac Toe</h1>
-      <h2 id="message-2"></h2>
-      <form id="sign-up">
-        <fieldset class="user-input">
-          <legend>Sign up!</legend>
-          <input type="text" name="credentials[email]" placeholder="email@example.com"><br>
-          <input type="password" name="credentials[password]" placeholder="Password"><br>
-          <input type="password" name="credentials[password_confirmation]" placeholder="Confirm password"><br>
-          <input type="submit" value="Sign up!" class="button"><br>
-        </fieldset>
-      </form>
-      <form id="sign-in">
-        <fieldset class="user-input">
-          <legend>Sign in!</legend>
-          <input type="text" name="credentials[email]" placeholder="email@example.com"><br>
-          <input type="password" name="credentials[password]" placeholder="Password"><br>
-          <input type="submit" value="Sign in!" class="button"><br>
-        </fieldset>
-      </form>
-      <!-- Guest Login Button -->
-      <!-- <form id="guest">
-        <input type="submit" value="Guest" class="button">
-      </form> -->
-      <form id='new-game' class="hidden">
-      <input type="submit" value="New Game" class="button">
-      </form>
+    <!-- Do not add `script` tags-->
+    <script src="public/vendor.js" type="text/javascript" charset="utf-8" defer></script>
+    <script src="public/application.js" type="text/javascript" charset="utf-8" defer></script>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand">
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <h1 class="accent">Kane's Ultimate Tic Tac Toe</h1>
+          </li>
+            <!-- Sign up -->
+          <li class="nav-item dropdown my-2 my-lg-0">
+            <a class="nav-link btn btn-outline-dark my-2 my-sm-0" href="#" id="sign-up-btn" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Sign up
+            </a>
+            <div id="sign-up-drop" class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <form id="sign-up" class="hide">
+                <fieldset>
+                  <legend>Sign up!</legend>
+                    <input type="text" name="credentials[email]" placeholder="email@example.com"><br>
+                    <input type="password" name="credentials[password]" placeholder="Password"><br>
+                    <input type="password" name="credentials[password_confirmation]" placeholder="Confirm password"><br>
+                    <input type="submit" value="Sign up!" class="button"><br>
+                </fieldset>
+              </form>
+            </div>
+          </li>
+            <!-- Sign In -->
+          <li class="nav-item dropdown my-2 my-lg-0 collapse.show">
+            <a class="nav-link btn btn-outline-dark my-2 my-sm-0" href="#" id="sign-in-btn" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Sign in
+            </a>
+              <div id="sign-in-drop" class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <form id="sign-in">
+                  <legend>Sign in!</legend>
+                  <input type="text" name="credentials[email]" placeholder="email@example.com"><br>
+                  <input type="password" name="credentials[password]" placeholder="Password"><br>
+                  <input type="submit" value="Sign in!" class="button"><br>
+                </form>
+              </div>
+            </li>
+            <!-- Change Password -->
+            <li class="nav-item dropdown my-2 my-lg-0">
+              <a class="nav-link btn btn-outline-dark my-2 my-sm-0 hidden" href="#" id="change-password-btn" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Change Pass
+              </a>
+              <div id="change-password-drop" class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <form id="change-password">
+                  <legend>Change Password</legend>
+                  <input type="password" name="passwords[old]" placeholder="Actual Password">
+                  <input type="password" name="passwords[new]" placeholder="New Password">
+                  <input type="submit" value="Change Password">
+                </form>
+              </div>
+            </li>
+            <!-- New game -->
+            <li class="nav-item dropdown my-2 my-lg-0">
+              <a class="nav-link btn btn-outline-dark my-2 my-sm-0 hidden" href="#" id="new-game-btn" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                New Game
+              </a>
+              <div id="new-game-drop" class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <form id="new-game" class="hide">
+                  <fieldset>
+                    <input type="submit" value="PvP" class="btn btn-outline-dark my-2 my-sm-0">
+                  </fieldset>
+                  <fieldset>
+                    <input type="submit" value="AI" class="btn btn-outline-dark my-2 my-sm-0">
+                  </fieldset>
+                </form>
+              </div>
+            </li>
+            <!-- Stats Button -->
+            <li class="nav-item dropdown my-2 my-lg-0">
+              <a class="nav-link btn btn-outline-dark my-2 my-sm-0 hidden" href="#" id="stats-btn" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Stats
+              </a>
+              <div id="stats-drop" class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <p id='count'></p>
+            </div>
+            </li>
+            <!-- Sign out -->
+            <li>
+              <form id="sign-out-btn" class="form-inline my-2 my-lg-0 hidden">
+                <input class="btn btn-outline-dark my-2 my-sm-0" type="submit" value="Sign Out">
+              </form>
+            </li>
+          </ul>
+          <!-- API Messages -->
+          <h2 id="api-message"></h2>
+        </div>
+      </nav>
+      <!-- Game Board -->
       <div class="container hidden">
-          <div class="row">
-            <div id="0" class="col-4 box">
-
-            </div>
-            <div id="1" class="col-4 box">
-
-            </div>
-            <div id="2" class="col-4 box">
-
-            </div>
-            <div id="3" class="col-4 box">
-
-            </div>
-            <div id="4" class="col-4 box">
-
-            </div>
-            <div id="5" class="col-4 box">
-
-            </div>
-            <div id="6" class="col-4 box">
-
-            </div>
-            <div id="7" class="col-4 box">
-
-            </div>
-            <div id="8" class="col-4 box">
-
-            </div>
+        <div class="row">
+          <div id="0" class="col-4 box"></div>
+          <div id="1" class="col-4 box"></div>
+          <div id="2" class="col-4 box"></div>
+          <div id="3" class="col-4 box"></div>
+          <div id="4" class="col-4 box"></div>
+          <div id="5" class="col-4 box"></div>
+          <div id="6" class="col-4 box"></div>
+          <div id="7" class="col-4 box"></div>
+          <div id="8" class="col-4 box"></div>
+        </div>
       </div>
-    </div>
-    <h2 id='Game'></h2>
-    <h2 id='message'></h2>
-    <form id='game-count' class="hidden">
-    <input type="submit" value="Game Count">
-    </form>
-    <p id='count' class="hidden"></p>
-    <form id="change-password" class="hidden bottom">
-      <fieldset class="user-input">
-        <legend>Change Password!</legend>
-        <input type="password" name="passwords[old]" placeholder="Old Password">
-        <input type="password" name="passwords[new]" placeholder="New Password">
-        <input type="submit" value="Change Password!">
-      </fieldset>
-    </form>
-    <form id="sign-out" class="hidden">
-      <input type="submit" value="Sign Out" class="button">
-    </form>
-    <footer class="accent">Made by Kane Two Feathers</footer>
+      <h2 id='game-state-message'></h2>
+      <h2 id='invalid-move-message'></h2>
+      <footer id="sticky-footer" class="py-4 accent">
+        <a class="nav-link" href="https://www.linkedin.com/in/kanetwofeathers/" target="_blank">© Kane Two Feathers 2020</a>
+      </footer>
     </body>
 </html>

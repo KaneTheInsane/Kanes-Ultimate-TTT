@@ -1,10 +1,13 @@
 @import '~bootstrap/scss/bootstrap';
 
-$body-bg-color: teal;
-$accent-color: #340123;
-$secondary: black;
-$font-color: #fff;
-$alt-color: red;
+$body-bg-color: #707070;
+$accent-color: #c4bebe;
+$secondary: #000;
+$font-color: #333;
+$error: #f00;
+$success: #0f0;
+$footer: #452e4d;
+$main-font: 'Oxanium', cursive;
 
 * {
   justify-content: center;
@@ -17,38 +20,62 @@ body {
 }
 
 h1 {
+  text-align: left;
+  background-color: $accent-color;
   color: $font-color;
+  font-family: $main-font;
   padding: 20px;
 }
 
 footer {
-  background: $accent-color;
+  background: $footer;
   bottom: 0;
-  height: 60px;
+  height: 70px;
   position: fixed;
   text-align: center;
+  justify-content: center;
   width: 100%;
 }
 
-.accent {
+a {
+  color: $accent-color;
+}
+
+input {
+  margin: 8px;
+}
+
+nav {
+  align-items: center;
   background-color: $accent-color;
-  color: $font-color;
+  justify-content: center;
+  vertical-align: middle;
+}
+
+.btn {
+  margin: 10px;
+}
+
+.container {
+  max-width: 420px;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+.nav-link {
+  align-items: center;
 }
 
 .box {
   align-items: center;
   background-color: $secondary;
-  border: 1px solid $white;
+  border: 1px solid $accent-color;
   color: $font-color;
   display: flex;
-  font-size: 15px;
-  height: 100px;
+  font-size: 300%;
+  height: 140px;
   justify-content: center;
   width: 100px;
-}
-
-.alt-color {
-  background-color: $alt-color;
 }
 
 .hidden {
@@ -59,14 +86,21 @@ footer {
   margin: 8px;
 }
 
-.bottom {
-  align-items: bottom;
+.on-bottom {
 }
 
 .x {
-  color: red;
+  color: $error;
 }
 
 .o {
-  color: green;
+  color: $success;
+}
+
+.success {
+  color: $font-color;
+}
+
+.failure {
+  color: $error;
 }

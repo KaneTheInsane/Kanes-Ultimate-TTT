@@ -3,27 +3,29 @@ const store = require('./store')
 const gameApi = require('./game-api/game-api')
 const ui = require('./auth/ui')
 
-let gameCount = 0
 let turn = 'X'
 
 const changeTurn = function () {
+  $('#invalid-move-message').text('')
   if (turn === 'X') {
     turn = 'O'
+    $('#game-state-message').text('Turn: O')
   } else {
     turn = 'X'
+    $('#game-state-message').text('Turn: X')
   }
 }
 const showCount = function (event) {
-  gameApi.getGameCount()
   event.preventDefault()
-  $('#count').text(gameCount)
-  $('#count').removeClass('hidden')
+  gameApi.getGameCount()
+    .then(ui.getGameCountSuccess)
+    .catch(ui.getGameCountFailure)
 }
+
 const winner = function () {
   store.game.game.over = true
-  $('#Game').text(turn + ' is the winner')
+  $('#game-state-message').text(turn + ' is the winner')
   gameApi.updateGame(store.game)
-  gameCount += 1
 }
 
 const checkWin = function () {
@@ -35,10 +37,9 @@ const checkWin = function () {
 }
 const checkDraw = function () {
   if ((store.game.game.cells.every(v => v !== '')) && (store.game.game.over === false)) {
-    $('#Game').text('Draw!')
+    $('#game-state-message').text('Draw!')
     store.game.game.over = true
     gameApi.updateGame(store.game)
-    gameCount += 1
   }
 }
 
@@ -73,12 +74,14 @@ const fillSpace = function (event) {
       winner()
     } else {
       checkDraw()
-      changeTurn()
+      if (store.game.game.over === false) {
+        changeTurn()
+      }
     }
   } else if (store.game.game.over === true) {
-    $('#message').text('Game is over')
+    $('#invalid-move-message').text('Game is over')
   } else {
-    $('#message').text('Invalid move')
+    $('#invalid-move-message').text('Invalid move')
   }
 }
 

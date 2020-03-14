@@ -3,79 +3,80 @@
 const store = require('../store')
 
 const signUpSuccess = function (data) {
-  $('#message-2').text('Signed up successfully')
-  $('#message-2').removeClass()
-  $('#message-2').addClass('success')
+  $('#api-message').text('Signed up successfully')
+  $('#api-message').removeClass()
+  $('#api-message').addClass('success')
+  store.user = data.user
   // future auto sign in
   // setTimeout((signInSuccess(data)), 2000)
   // console.log('signUpSuccess data is: ', data)
 }
 
 const signUpFailure = function () {
-  $('#message-2').text('Error on sign up')
-  $('#message-2').removeClass()
-  $('#message-2').addClass('failure')
+  $('#api-message').text('Error on sign up')
+  $('#api-message').removeClass()
+  $('#api-message').addClass('failure')
   // console.log('signUpFailure error is: ', error)
 }
 
 const signInSuccess = function (data) {
-  $('#message-2').text('You are signed it!')
-  $('#message-2').removeClass()
-  $('#message-2').addClass('success')
-  $('#game-count').removeClass('hidden')
-  $('#new-game').removeClass('hidden')
-  $('#change-password').removeClass('hidden')
-  $('#sign-out').removeClass('hidden')
-  $('#sign-in').addClass('hidden')
-  $('#sign-up').addClass('hidden')
+  $('#api-message').text('You are signed in!')
+  $('#api-message').removeClass()
+  $('#api-message').addClass('success')
+  $('#stats-btn').removeClass('hidden')
+  $('#new-game-btn').removeClass('hidden')
+  $('#change-password-btn').removeClass('hidden')
+  $('#sign-out-btn').removeClass('hidden')
+  $('#sign-in-btn').addClass('hidden')
+  $('#sign-up-btn').addClass('hidden')
   $('#guest').addClass('hidden')
   // console.log('signInSuccess data is: ', data)
   store.user = data.user
 }
 
 const signInFailure = function () {
-  $('#message-2').text('Error on sign in')
-  $('#message-2').removeClass()
-  $('#message-2').addClass('failure')
+  $('#api-message').text('Error on sign in')
+  $('#api-message').removeClass()
+  $('#api-message').addClass('failure')
   // console.log('signInFailure error is: ', error)
 }
 
 const changePasswordSuccess = function (data) {
-  $('#message-2').text('Password changed successfully')
-  $('#message-2').removeClass()
-  $('#message-2').addClass('success')
+  $('#api-message').text('Password changed successfully')
+  $('#api-message').removeClass()
+  $('#api-message').addClass('success')
   // console.log('changePasswordSuccess data is: ', data)
 }
 
 const changePasswordFailure = function () {
-  $('#message-2').text('Error on change password')
-  $('#message-2').removeClass()
-  $('#message-2').addClass('failure')
+  $('#api-message').text('Error on change password')
+  $('#api-message').removeClass()
+  $('#api-message').addClass('failure')
   // console.log('changePasswordFailure error is: ', error)
 }
 
 const signOutSuccess = function (data) {
-  $('#message-2').text('Signed out successfully')
-  $('#message-2').removeClass()
-  $('#message-2').addClass('success')
-  $('#sign-in').removeClass('hidden')
-  $('#sign-up').removeClass('hidden')
+  $('#api-message').text('Signed out successfully')
+  $('#api-message').removeClass()
+  $('#api-message').addClass('success')
+  $('#sign-in-btn').removeClass('hidden')
+  $('#sign-up-btn').removeClass('hidden')
   $('.container').addClass('hidden')
-  $('#change-password').addClass('hidden')
-  $('#new-game').addClass('hidden')
-  $('#game-count').addClass('hidden')
-  $('#sign-out').addClass('hidden')
+  $('#change-password-btn').addClass('hidden')
+  $('#new-game-btn').addClass('hidden')
+  $('#stats-btn').addClass('hidden')
+  $('#sign-out-btn').addClass('hidden')
   $('.box').text('')
-  $('#Game').text('')
-  $('#message').text('')
+  $('#game-state-message').text('')
+  $('#invalid-move-message').text('')
   $('#count').addClass('hidden')
   // console.log('signOutSuccess data is: ', data)
 }
 
 const signOutFailure = function () {
-  $('#message-2').text('Error on sign out')
-  $('#message-2').removeClass()
-  $('#message-2').addClass('failure')
+  $('#api-message').text('Error on sign out')
+  $('#api-message').removeClass()
+  $('#api-message').addClass('failure')
 //   console.log('signOutFailure error is: ', error)
 }
 
@@ -85,8 +86,9 @@ const newGameSuccess = function (gameData) {
   $('.box').text('')
   $('.box').removeClass('x')
   $('.box').removeClass('o')
-  $('#Game').text('')
-  $('#message').text('')
+  $('#invalid-move-message').removeClass()
+  $('#game-state-message').text('Turn: X')
+  $('#invalid-move-message').text('')
   store.game = gameData
   // console.log(gameData.game.id)
   store.currentID = gameData.game.id
@@ -110,6 +112,17 @@ const guestLogin = function (event) {
   $('#guest').addClass('hidden')
 }
 
+const getGameCountSuccess = function (data) {
+  // console.log(data)
+  store.gameCount = data.games.length
+  // console.log(store.gameCount)
+  $('#count').text('You have played ' + store.gameCount + ' games!')
+}
+
+const getGameCountFailure = function () {
+
+}
+
 module.exports = {
   signUpSuccess,
   signUpFailure,
@@ -121,5 +134,7 @@ module.exports = {
   signOutFailure,
   newGameSuccess,
   newGameFailure,
-  guestLogin
+  guestLogin,
+  getGameCountSuccess,
+  getGameCountFailure
 }
