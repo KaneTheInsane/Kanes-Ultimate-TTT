@@ -20,20 +20,20 @@ body {
 }
 
 h1 {
-  text-align: left;
   background-color: $accent-color;
   color: $font-color;
   font-family: $main-font;
   padding: 20px;
+  text-align: left;
 }
 
 footer {
   background: $footer;
   bottom: 0;
   height: 70px;
+  justify-content: center;
   position: fixed;
   text-align: center;
-  justify-content: center;
   width: 100%;
 }
 
@@ -57,9 +57,9 @@ nav {
 }
 
 .container {
-  max-width: 420px;
-  margin-top: 50px;
   margin-bottom: 50px;
+  margin-top: 50px;
+  max-width: 420px;
 }
 
 .nav-link {
@@ -84,9 +84,6 @@ nav {
 
 .button {
   margin: 8px;
-}
-
-.on-bottom {
 }
 
 .x {
