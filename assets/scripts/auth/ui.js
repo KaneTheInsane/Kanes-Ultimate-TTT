@@ -69,7 +69,6 @@ const signOutSuccess = function (data) {
   $('.box').text('')
   $('#game-state-message').text('')
   $('#invalid-move-message').text('')
-  $('#count').addClass('hidden')
   // console.log('signOutSuccess data is: ', data)
 }
 
