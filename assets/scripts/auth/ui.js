@@ -112,7 +112,8 @@ const guestLogin = function (event) {
 }
 
 const getGameCountSuccess = function (data) {
-  // console.log(data)
+  console.log(store)
+  console.log(data)
   store.gameCount = data.games.length
   // console.log(store.gameCount)
   $('#count').text('You have played ' + store.gameCount + ' games!')

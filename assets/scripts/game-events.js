@@ -61,6 +61,7 @@ const fillSpace = function (event) {
   if (space !== 'X' && space !== 'O' && store.game.game.over === false) {
     // add them to the boad
     $(event.target).text(turn)
+    console.log(store.game)
     gameApi.updateGame(store.game)
     if (turn === 'X') {
       $(event.target).addClass('x')
@@ -68,7 +69,7 @@ const fillSpace = function (event) {
       $(event.target).addClass('o')
     }
     store.game.game.cells.splice(position, 1, turn)
-    // console.log(store.game.game.cells)
+    console.log(store.game.game.cells)
     // check for winner
     if (checkWin() === true) {
       winner()
