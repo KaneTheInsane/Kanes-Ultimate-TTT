@@ -24,7 +24,7 @@
               Sign up
             </a>
             <div id="sign-up-drop" class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <form id="sign-up" class="hide">
+              <form id="sign-up">
                 <fieldset>
                   <legend>Sign up!</legend>
                     <input type="text" name="credentials[email]" placeholder="email@example.com"><br>
@@ -71,10 +71,10 @@
               <div id="new-game-drop" class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <form id="new-game" class="hide">
                   <fieldset>
-                    <input type="submit" value="PvP" class="btn btn-outline-dark my-2 my-sm-0">
+                    <input id="pvp-game" type="submit" value="PvP" class="btn btn-outline-dark my-2 my-sm-0">
                   </fieldset>
                   <fieldset>
-                    <input type="submit" value="AI" class="btn btn-outline-dark my-2 my-sm-0">
+                    <input id="ai-game" type="submit" value="AI" class="btn btn-outline-dark my-2 my-sm-0">
                   </fieldset>
                 </form>
               </div>
@@ -113,7 +113,7 @@
           <div id="8" class="col-4 box"></div>
         </div>
       </div>
-      <h2 id='game-state-message'></h2>
+      <h2 id='game-state-message' class="hidden">Turn: <span id="game-state-span"></span></h2>
       <h2 id='invalid-move-message'></h2>
       <footer id="sticky-footer" class="py-4 accent">
         <a class="nav-link" href="https://www.linkedin.com/in/kanetwofeathers/" target="_blank">© Kane Two Feathers 2020</a>

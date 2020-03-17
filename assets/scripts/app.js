@@ -9,6 +9,14 @@ const ui = require('./auth/ui')
 // require('./example')
 
 $(() => {
+  // $('#pvp-game').on('submit', function () {
+  //   console.log('PVP game')
+  //   gameEvents = require('./game-events')
+  // })
+  // $('#ai-game').on('submit', function () {
+  //   console.log('AI game')
+  //   gameEvents = require('./game-events-ai')
+  // })
   $('.box').on('click', gameEvents.fillSpace)
   $('#new-game').on('submit', gameEvents.newGame)
   $('#stats-btn').on('click', gameEvents.showCount)

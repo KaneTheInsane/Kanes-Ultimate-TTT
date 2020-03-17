@@ -19,12 +19,24 @@ const game = {
 const store = {
 }
 
+const corners = [0, 2, 6, 8]
+
+const sides = [1, 3, 5, 7]
+
+const turn = 'X'
+
 const guestAccount = false
+
+const pveTurn = 'Player'
 
 module.exports = {
   winCondition,
   store,
   game,
-  guestAccount
+  guestAccount,
+  turn,
+  corners,
+  sides,
+  pveTurn
 
 }

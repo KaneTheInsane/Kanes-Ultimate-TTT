@@ -3,16 +3,18 @@ const store = require('./store')
 const gameApi = require('./game-api/game-api')
 const ui = require('./auth/ui')
 
-let turn = 'X'
-
 const changeTurn = function () {
   $('#invalid-move-message').text('')
-  if (turn === 'X') {
-    turn = 'O'
-    $('#game-state-message').text('Turn: O')
+  if (store.turn === 'X') {
+    store.turn = 'O'
+    $('#game-state-span').text(store.turn)
+    $('#game-state-span').removeClass()
+    $('#game-state-span').addClass('o')
   } else {
-    turn = 'X'
-    $('#game-state-message').text('Turn: X')
+    store.turn = 'X'
+    $('#game-state-span').text(store.turn)
+    $('#game-state-span').removeClass()
+    $('#game-state-span').addClass('x')
   }
 }
 const showCount = function (event) {
@@ -24,13 +26,14 @@ const showCount = function (event) {
 
 const winner = function () {
   store.game.game.over = true
-  $('#game-state-message').text(turn + ' is the winner')
+  $('#game-state-message').text(store.turn + ' is the winner')
   gameApi.updateGame(store.game)
 }
 
 const checkWin = function () {
   for (let i = 0; i < 8; i++) {
     if (store.winCondition[i].every(v => store.game.game.cells[v] === 'X') || store.winCondition[i].every(v => store.game.game.cells[v] === 'O')) {
+      // store.winCondition[i].every(v => $().addClass('winSquare'))
       winner()
     }
   }
@@ -45,7 +48,7 @@ const checkDraw = function () {
 
 const newGame = function (event) {
   event.preventDefault()
-  turn = 'X'
+  store.turn = 'X'
   gameApi.createGame()
     .then(ui.newGameSuccess)
     .catch(ui.newGameFailure)
@@ -60,16 +63,26 @@ const fillSpace = function (event) {
   // if space is open
   if (space !== 'X' && space !== 'O' && store.game.game.over === false) {
     // add them to the boad
-    $(event.target).text(turn)
-    console.log(store.game)
-    gameApi.updateGame(store.game)
-    if (turn === 'X') {
+    $(event.target).text(store.turn)
+    // console.log(store.game)
+
+    gameApi.updateGame({
+      'game': {
+        'cell': {
+          'index': position,
+          'value': store.turn
+        },
+        'over': store.game.game.over
+      }
+    })
+
+    if (store.turn === 'X') {
       $(event.target).addClass('x')
     } else {
       $(event.target).addClass('o')
     }
-    store.game.game.cells.splice(position, 1, turn)
-    console.log(store.game.game.cells)
+    store.game.game.cells.splice(position, 1, store.turn)
+    // console.log(store.game.game.cells)
     // check for winner
     if (checkWin() === true) {
       winner()
