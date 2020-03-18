@@ -28,6 +28,7 @@ const winner = function () {
   store.game.game.over = true
   $('#game-state-message').text(store.turn + ' is the winner')
   gameApi.updateGame(store.game)
+  $('.easter-egg').removeClass('hidden')
 }
 
 const checkWin = function () {

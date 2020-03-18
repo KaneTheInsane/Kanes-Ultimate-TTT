@@ -20,7 +20,7 @@ const signUpFailure = function () {
 }
 
 const signInSuccess = function (data) {
-  console.log(data)
+  // console.log(data)
   $('#api-message').text('You are signed as ' + data.user.email)
   $('#api-message').removeClass()
   $('#api-message').addClass('success')
@@ -84,6 +84,7 @@ const newGameSuccess = function (gameData) {
   // console.log(gameData)
   $('.container').removeClass('hidden')
   $('#game-state-message').removeClass('hidden')
+  $('.easter-egg').addClass('hidden')
   // $('#game-state-span').addClass('x')
   // $('#game-state-span').text('X')
   $('.box').text('')

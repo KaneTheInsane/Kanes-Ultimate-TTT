@@ -83,7 +83,7 @@ const aiFillSpace = function () {
   if ((store.game.game.over === false) && (store.game.game.cells[4] === '')) {
     $('#4').text('O')
     store.game.game.cells.splice(4, 1, store.pveTurn)
-    console.log(store.pveTurn)
+    // console.log(store.pveTurn)
   } else if (store.game.game.over === false && checkCorners() === true) {
     const space = getRandomInt(3)
     if ((space === 0) && (store.game.game.cells[0] === '')) {
@@ -149,7 +149,7 @@ const fillSpace = function (event) {
       $(event.target).addClass('o')
     }
     store.game.game.cells.splice(position, 1, store.pveTurn)
-    console.log(store.game.game.cells)
+    // console.log(store.game.game.cells)
     // check for winner
     if (checkWin() === true) {
       winner()

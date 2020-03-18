@@ -8,6 +8,7 @@ $error: #f00;
 $success: #0f0;
 $footer: #452e4d;
 $main-font: 'Oxanium', cursive;
+$secret: #8c9fc2;
 
 * {
   justify-content: center;
@@ -101,4 +102,13 @@ nav {
 
 .failure {
   color: $error;
+}
+
+.easter-egg {
+  color: $secret;
+  text-align: right;
+}
+
+.easter-egg-link {
+  color: $secret;
 }
