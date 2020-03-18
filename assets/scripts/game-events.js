@@ -7,12 +7,12 @@ const changeTurn = function () {
   $('#invalid-move-message').text('')
   if (store.turn === 'X') {
     store.turn = 'O'
-    $('#game-state-span').text(store.turn)
+    $('#game-state-message').text('Turn: ' + store.turn)
     $('#game-state-span').removeClass()
     $('#game-state-span').addClass('o')
   } else {
     store.turn = 'X'
-    $('#game-state-span').text(store.turn)
+    $('#game-state-message').text('Turn: ' + store.turn)
     $('#game-state-span').removeClass()
     $('#game-state-span').addClass('x')
   }

@@ -7,6 +7,7 @@ const changeTurn = function () {
   $('#invalid-move-message').text('')
   if (store.pveTurn === 'Player') {
     store.pveTurn = 'AI'
+    aiFillSpace()
     $('#game-state-span').text(store.pveTurn)
     $('#game-state-span').removeClass()
     $('#game-state-span').addClass('o')
@@ -15,7 +16,6 @@ const changeTurn = function () {
     $('#game-state-span').text(store.pveTurn)
     $('#game-state-span').removeClass()
     $('#game-state-span').addClass('x')
-    aiFillSpace()
   }
 }
 const showCount = function (event) {
@@ -36,8 +36,8 @@ const winner = function () {
 }
 
 const checkCorners = function () {
-  for (let i = 0; i < 3; i++) {
-    if (store.corners[i].some(v => store.game.cells[v] === '')) {
+  for (let i = 0; i < 4; i++) {
+    if (store.corners[i].some(v => store.game.game.cells[v] === '')) {
       return true
     } else {
       return false
@@ -46,8 +46,8 @@ const checkCorners = function () {
 }
 
 const checkSides = function () {
-  for (let i = 0; i < 3; i++) {
-    if (store.sides[i].some(v => store.game.cells[v] === '')) {
+  for (let i = 0; i < 4; i++) {
+    if (store.sides[i].some(v => store.game.game.cells[v] === '')) {
       return true
     } else {
       return false
@@ -82,6 +82,8 @@ const newGame = function (event) {
 const aiFillSpace = function () {
   if ((store.game.game.over === false) && (store.game.game.cells[4] === '')) {
     $('#4').text('O')
+    store.game.game.cells.splice(4, 1, store.pveTurn)
+    console.log(store.pveTurn)
   } else if (store.game.game.over === false && checkCorners() === true) {
     const space = getRandomInt(3)
     if ((space === 0) && (store.game.game.cells[0] === '')) {
@@ -119,12 +121,18 @@ const aiFillSpace = function () {
   }
 }
 
-const playerFillSpace = function (event) {
+const fillSpace = function (event) {
   event.preventDefault()
+  // get the position in the aray that they moved to
   const position = event.target.id
+  // get the curent text of the space the y chose
   const space = $(event.target).text()
+  // if space is open
   if (space !== 'X' && space !== 'O' && store.game.game.over === false) {
+    // add them to the boad
     $(event.target).text('X')
+    // console.log(store.game)
+
     gameApi.updateGame({
       'game': {
         'cell': {
@@ -141,6 +149,8 @@ const playerFillSpace = function (event) {
       $(event.target).addClass('o')
     }
     store.game.game.cells.splice(position, 1, store.pveTurn)
+    console.log(store.game.game.cells)
+    // check for winner
     if (checkWin() === true) {
       winner()
     } else {
@@ -156,8 +166,47 @@ const playerFillSpace = function (event) {
   }
 }
 
+//
+// const fillSpace = function (event) {
+//   console.log('AI game move')
+//   event.preventDefault()
+//   const position = event.target.id
+//   const space = $(event.target).text()
+//   if (space !== 'X' && space !== 'O' && store.game.game.over === false) {
+//     $(event.target).text('X')
+//     gameApi.updateGame({
+//       'game': {
+//         'cell': {
+//           'index': position,
+//           'value': store.turn
+//         },
+//         'over': store.game.game.over
+//       }
+//     })
+//
+//     if (store.pveTurn === 'Player') {
+//       $(event.target).addClass('x')
+//     } else {
+//       $(event.target).addClass('o')
+//     }
+//     store.game.game.cells.splice(position, 1, store.pveTurn)
+//     if (checkWin() === true) {
+//       winner()
+//     } else {
+//       checkDraw()
+//       if (store.game.game.over === false) {
+//         changeTurn()
+//       }
+//     }
+//   } else if (store.game.game.over === true) {
+//     $('#invalid-move-message').text('Game is over')
+//   } else {
+//     $('#invalid-move-message').text('Invalid move')
+//   }
+// }
+
 module.exports = {
-  playerFillSpace,
+  fillSpace,
   aiFillSpace,
   newGame,
   showCount

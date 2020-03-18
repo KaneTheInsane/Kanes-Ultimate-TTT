@@ -4,18 +4,25 @@
 // const example = require('./example')
 const authEvents = require('./auth/events.js')
 const gameEvents = require('./game-events')
+// const gameEventsNoAI = require('./game-events')
+// const gameEventsAI = require('./game-events-ai')
 const ui = require('./auth/ui')
 // use require without a reference to ensure a file is bundled
 // require('./example')
 
 $(() => {
-  // $('#pvp-game').on('submit', function () {
+  // const newPvPGame = function (event) {
+  //   event.preventDefault()
   //   console.log('PVP game')
-  //   gameEvents = require('./game-events')
-  // })
-  // $('#ai-game').on('submit', function () {
+  //   gameEvents = gameEventsNoAI
+  //   gameEvents.newGame()
+  // }
+  // $('#pvp-game').on('submit', newPvPGame())
+  // $('#ai-game').on('submit', function (event) {
+  //   event.preventDefault()
   //   console.log('AI game')
-  //   gameEvents = require('./game-events-ai')
+  //   gameEvents = gameEventsAI
+  //   gameEvents.newGame()
   // })
   $('.box').on('click', gameEvents.fillSpace)
   $('#new-game').on('submit', gameEvents.newGame)

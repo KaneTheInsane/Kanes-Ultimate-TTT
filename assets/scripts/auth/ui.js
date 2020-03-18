@@ -84,13 +84,15 @@ const newGameSuccess = function (gameData) {
   // console.log(gameData)
   $('.container').removeClass('hidden')
   $('#game-state-message').removeClass('hidden')
-  $('#game-state-span').addClass('x')
-  $('#game-state-span').text('X')
+  // $('#game-state-span').addClass('x')
+  // $('#game-state-span').text('X')
   $('.box').text('')
   $('.box').removeClass('x')
   $('.box').removeClass('o')
   $('#invalid-move-message').removeClass()
-  // $('#game-state-message').text('Turn: X')
+  $('#game-state-message').text('Turn: X')
+  // $('#game-state-message').append(store.span)
+  // $('#game-state-span').text('X')
   $('#invalid-move-message').text('')
   store.game = gameData
   // console.log(gameData.game.id)
@@ -116,8 +118,8 @@ const guestLogin = function (event) {
 }
 
 const getGameCountSuccess = function (data) {
-  console.log(store)
-  console.log(data)
+  // console.log(store)
+  // console.log(data)
   store.gameCount = data.games.length
   // console.log(store.gameCount)
   $('#count').text('You have played ' + store.gameCount + ' games!')

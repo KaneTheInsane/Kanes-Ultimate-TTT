@@ -29,6 +29,8 @@ const guestAccount = false
 
 const pveTurn = 'Player'
 
+const span = 'O'
+
 module.exports = {
   winCondition,
   store,
@@ -37,6 +39,7 @@ module.exports = {
   turn,
   corners,
   sides,
-  pveTurn
+  pveTurn,
+  span
 
 }
