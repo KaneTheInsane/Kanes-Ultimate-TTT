@@ -1,6 +1,8 @@
 const config = require('../config')
 const store = require('../store')
 
+
+// Api call for creating a new game
 const createGame = function (gameData) {
   return $.ajax({
     url: config.apiUrl + '/games',
@@ -12,6 +14,7 @@ const createGame = function (gameData) {
   })
 }
 
+// Api call for updating the game state
 const updateGame = function (gameData) {
   return $.ajax({
     url: config.apiUrl + '/games/' + store.currentID,
@@ -23,6 +26,7 @@ const updateGame = function (gameData) {
   })
 }
 
+// Api call for finding a specific game based on ID
 const getSingleGame = function (id, data) {
   return $.ajax({
     url: config.apiUrl + '/games/' + id,
@@ -34,6 +38,7 @@ const getSingleGame = function (id, data) {
   })
 }
 
+// Api call for finding game stats
 const getGameCount = function (data) {
   return $.ajax({
     url: config.apiUrl + '/games',

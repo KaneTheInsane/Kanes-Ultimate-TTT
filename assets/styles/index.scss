@@ -17,7 +17,8 @@ $secret: #8c9fc2;
 
 body {
   background-color: $body-bg-color;
-  // padding: 10px;
+  clear: both;
+  margin-bottom: 100px;
 }
 
 h1 {
@@ -64,8 +65,9 @@ nav {
   max-width: 420px;
 }
 
-.nav-link {
+.nav-item {
   align-items: center;
+  vertical-align: middle;
 }
 
 .box {
