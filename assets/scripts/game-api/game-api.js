@@ -1,7 +1,6 @@
 const config = require('../config')
 const store = require('../store')
 
-
 // Api call for creating a new game
 const createGame = function (gameData) {
   return $.ajax({

@@ -24,7 +24,7 @@ I built my game in a 4 day period, I approached the problem by breaking it up in
 First I made my [wireframe](https://wireframe.cc/UPHLJu) and [user stories](https://docs.google.com/document/d/1wudfHGWM7rPGWo77dNYKamerVRqQxQKFvquoIPEU17Q/edit)
 in order to understand what I wanted the final product. The next step for me was building the game logic. Further breaking things into steps I used an array to represent the game board in JavaScript. building up the logic functionally. After tackling that I moved into my authorization methods built using Ajax and Jquery to communicate to an API that was already built. Finally I built the stylized the page using css and sass.
 
-My over all strategy to keep things moving was to focus on what I knew I could complete first and continue working on that one piece until I was finished without jumping around. By doing this I could make sure I had working componentes an
+My over all strategy to keep things moving was to focus on what I knew I could complete first and continue working on that one piece until I was finished without jumping around. By doing this I could make sure I was building off of working componentes. The pieces that worked well could further guide my programming decisions
 
 ### Some problems left to solve
 
