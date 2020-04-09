@@ -24,14 +24,24 @@ $(() => {
   //   gameEvents = gameEventsAI
   //   gameEvents.newGame()
   // })
+
+  // Move on game board
   $('.box').on('click', gameEvents.fillSpace)
+
+  // Create new game
   $('#new-game').on('submit', gameEvents.newGame)
+
+  // Show stats
   $('#stats-btn').on('click', gameEvents.showCount)
+
+  // Account actions
   $('#sign-up').on('submit', authEvents.onSignUp)
   $('#sign-in').on('submit', authEvents.onSignIn)
   $('#change-password').on('submit', authEvents.onChangePassword)
   $('#sign-out-btn').on('submit', authEvents.onSignOut)
   $('#guest').on('submit', ui.guestLogin)
+
+  // Dropdown menu close
   $('#sign-in-drop').on('submit', function () {
     $('#sign-in-btn').dropdown('toggle')
   })
