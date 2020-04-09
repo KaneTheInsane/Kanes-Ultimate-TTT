@@ -15,7 +15,7 @@
     <nav class="navbar navbar-expand">
             <h1 class="accent">Kane's Ultimate Tic Tac Toe</h1>
             <!-- Sign up -->
-            <button class="nav-link btn btn-outline-dark my-2 my-sm-0" id="sign-up-btn" role="button" data-target="#signUpModal" data-toggle="modal" aria-haspopup="true" aria-expanded="false">
+            <button id="sign-in-menu" class="btn btn-outline-dark my-2 my-sm-0" role="button" data-target="#signUpModal" data-toggle="modal" aria-haspopup="true" aria-expanded="false">
               Sign up
             </button>
             <!-- Modal -->
@@ -23,7 +23,6 @@
               <div class="modal-dialog" role="document">
                 <div class="modal-content">
                   <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                       <span aria-hidden="true">&times;</span>
                     </button>
@@ -35,29 +34,37 @@
                           <input type="text" name="credentials[email]" placeholder="email@example.com"><br>
                           <input type="password" name="credentials[password]" placeholder="Password"><br>
                           <input type="password" name="credentials[password_confirmation]" placeholder="Confirm password"><br>
-                          <input type="submit" value="Sign up!" class="button"><br>
+                          <button id="sign-up-btn" type="button" class="btn btn-primary" data-dismiss="modal">Confirm</button>
                       </fieldset>
                     </form>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
                   </div>
                 </div>
               </div>
             </div>
             <!-- Sign In -->
-            <a class="nav-link btn btn-outline-dark my-2 my-sm-0" href="#" id="sign-in-btn" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <button id="sign-up-menu" class="btn btn-outline-dark my-2 my-sm-0" role="button" data-target="#signInModal" data-toggle="modal" aria-haspopup="true" aria-expanded="false">
               Sign in
-            </a>
-              <div id="sign-in-drop" class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <form id="sign-in">
-                  <legend>Sign in!</legend>
-                  <input type="text" name="credentials[email]" placeholder="email@example.com"><br>
-                  <input type="password" name="credentials[password]" placeholder="Password"><br>
-                  <input type="submit" value="Sign in!" class="button"><br>
-                </form>
+            </button>
+            <!-- Modal -->
+            <div class="modal fade" id="signInModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <form id="sign-in">
+                      <legend>Sign in!</legend>
+                      <input type="text" name="credentials[email]" placeholder="email@example.com"><br>
+                      <input type="password" name="credentials[password]" placeholder="Password"><br>
+                      <button id="sign-in-btn" type="button" class="btn btn-primary" data-dismiss="modal">Confirm</button>
+                    </form>
+                  </div>
+                </div>
               </div>
+            </div>
             <ul class="navbar-nav mr-auto">
             <!-- Change Password -->
             <li class="nav-item dropdown my-2 my-lg-0">

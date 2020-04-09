@@ -35,23 +35,9 @@ $(() => {
   $('#stats-btn').on('click', gameEvents.showCount)
 
   // Account actions
-  $('#sign-up').on('submit', authEvents.onSignUp)
-  $('#sign-in').on('submit', authEvents.onSignIn)
+  $('#sign-up-btn').on('click', authEvents.onSignUp)
+  $('#sign-in-btn').on('click', authEvents.onSignIn)
   $('#change-password').on('submit', authEvents.onChangePassword)
   $('#sign-out-btn').on('submit', authEvents.onSignOut)
   $('#guest').on('submit', ui.guestLogin)
-
-  // Dropdown menu close
-  $('#sign-in-drop').on('submit', function () {
-    $('#sign-in-btn').dropdown('toggle')
-  })
-  $('#new-game-drop').on('submit', function () {
-    $('#new-game-btn').dropdown('toggle')
-  })
-  $('#sign-up-drop').on('submit', function () {
-    $('#sign-up-btn').dropdown('toggle')
-  })
-  $('#change-password-drop').on('submit', function () {
-    $('#change-password-btn').dropdown('toggle')
-  })
 })

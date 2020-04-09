@@ -7,8 +7,7 @@ const store = require('../store')
 
 const onSignUp = function (event) {
   event.preventDefault()
-  // console.log('Signing up')
-  const data = getFormFields(event.target)
+  const data = getFormFields($('#sign-up')[0])
   api.signUp(data)
     .then(ui.signUpSuccess)
     .catch(ui.signUpFailure)
@@ -17,7 +16,7 @@ const onSignUp = function (event) {
 const onSignIn = function (event) {
   event.preventDefault()
   // console.log('Signing in')
-  const data = getFormFields(event.target)
+  const data = getFormFields($('#sign-in')[0])
   api.signIn(data)
     .then(ui.signInSuccess)
     .catch(ui.signInFailure)
