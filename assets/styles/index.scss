@@ -70,12 +70,13 @@ nav {
   vertical-align: middle;
 }
 
-.box {
+.game-box {
   align-items: center;
   background-color: $secondary;
   border: 1px solid $accent-color;
   color: $font-color;
   display: flex;
+  font-family: 'Press Start 2P', cursive;
   font-size: 300%;
   height: 140px;
   justify-content: center;
@@ -121,4 +122,8 @@ nav {
 
 .modal-footer {
   border-top: 0 none;
+}
+
+.modal-content {
+  background-color: $secret;
 }

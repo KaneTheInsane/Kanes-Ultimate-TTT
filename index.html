@@ -4,6 +4,7 @@
     <title>Kane's Tic Tac Toe</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/css?family=Oxanium&amp;=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&amp;display=swap" rel="stylesheet">
     <!-- Do not add `link` tags-->
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
 
@@ -13,9 +14,9 @@
   </head>
   <body>
     <nav class="navbar navbar-expand">
-            <h1 class="accent">Kane's Ultimate Tic Tac Toe</h1>
+            <h1 class="accent">Ultimate Tic Tac Toe</h1>
             <!-- Sign up -->
-            <button id="sign-in-menu" class="btn btn-outline-dark my-2 my-sm-0" role="button" data-target="#signUpModal" data-toggle="modal" aria-haspopup="true" aria-expanded="false">
+            <button id="sign-in-menu" class="btn btn-secondary my-2 my-sm-0" role="button" data-target="#signUpModal" data-toggle="modal" aria-haspopup="true" aria-expanded="false">
               Sign up
             </button>
             <!-- Modal -->
@@ -42,7 +43,7 @@
               </div>
             </div>
             <!-- Sign In -->
-            <button id="sign-up-menu" class="btn btn-outline-dark my-2 my-sm-0" role="button" data-target="#signInModal" data-toggle="modal" aria-haspopup="true" aria-expanded="false">
+            <button id="sign-up-menu" class="btn btn-secondary my-2 my-sm-0" role="button" data-target="#signInModal" data-toggle="modal" aria-haspopup="true" aria-expanded="false">
               Sign in
             </button>
             <!-- Modal -->
@@ -68,7 +69,7 @@
             <ul class="navbar-nav mr-auto">
             <!-- Change Password -->
             <li class="nav-item dropdown my-2 my-lg-0">
-              <a class="nav-link btn btn-outline-dark my-2 my-sm-0 hidden" href="#" id="change-password-btn" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <a class="nav-link btn btn-secondary my-2 my-sm-0 hidden" href="#" id="change-password-btn" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Change Pass
               </a>
               <div id="change-password-drop" class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -82,7 +83,7 @@
             </li>
             <!-- New game -->
             <li class="nav-item dropdown my-2 my-lg-0">
-              <a class="nav-link btn btn-outline-dark my-2 my-sm-0 hidden" href="#" id="new-game-btn" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <a class="nav-link btn btn-secondary my-2 my-sm-0 hidden" href="#" id="new-game-btn" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 New Game
               </a>
               <div id="new-game-drop" class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -98,7 +99,7 @@
             </li>
             <!-- Stats Button -->
             <li class="nav-item dropdown my-2 my-lg-0">
-              <a class="nav-link btn btn-outline-dark my-2 my-sm-0 hidden" href="#" id="stats-btn" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <a class="nav-link btn btn-secondary my-2 my-sm-0 hidden" href="#" id="stats-btn" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Stats
               </a>
               <div id="stats-drop" class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -108,7 +109,7 @@
             <!-- Sign out -->
             <li>
               <form id="sign-out-btn" class="form-inline my-2 my-lg-0 hidden">
-                <input class="btn btn-outline-dark my-2 my-sm-0" type="submit" value="Sign Out">
+                <input class="btn btn-secondary my-2 my-sm-0" type="submit" value="Sign Out">
               </form>
             </li>
           </ul>
@@ -118,23 +119,24 @@
       <!-- Game Board -->
       <div class="container hidden">
         <div class="row">
-          <div id="0" class="col-4 box"></div>
-          <div id="1" class="col-4 box"></div>
-          <div id="2" class="col-4 box"></div>
-          <div id="3" class="col-4 box"></div>
-          <div id="4" class="col-4 box"></div>
-          <div id="5" class="col-4 box"></div>
-          <div id="6" class="col-4 box"></div>
-          <div id="7" class="col-4 box"></div>
-          <div id="8" class="col-4 box"></div>
+          <div id="0" class="col-4 box game-box"></div>
+          <div id="1" class="col-4 box game-box"></div>
+          <div id="2" class="col-4 box game-box"></div>
+          <div id="3" class="col-4 box game-box"></div>
+          <div id="4" class="col-4 box game-box"></div>
+          <div id="5" class="col-4 box game-box"></div>
+          <div id="6" class="col-4 box game-box"></div>
+          <div id="7" class="col-4 box game-box"></div>
+          <div id="8" class="col-4 box game-box"></div>
         </div>
+      <div class="col-4 box container"></div>
+        <h2 id='game-state-message' class="hidden">Turn: <span id="game-state-span"></span></h2>
+        <h2 id='invalid-move-message'></h2>
       </div>
       <p class="easter-egg hidden">
         <a class="easter-egg-link" href="https://www.youtube.com/watch?v=QrGrOK8oZG8" target="_blank">!</a>
       </p>
       <!-- Game Messages -->
-      <h2 id='game-state-message' class="hidden">Turn: <span id="game-state-span"></span></h2>
-      <h2 id='invalid-move-message'></h2>
       <!-- Footer -->
       <footer id="sticky-footer" class="py-4 accent">
         <a class="nav-link" href="https://www.linkedin.com/in/kanetwofeathers/" target="_blank">© Kane Two Feathers 2020</a>
