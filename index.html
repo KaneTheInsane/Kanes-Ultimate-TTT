@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Kane's Tic Tac Toe</title>
+    <title>Ultimate Tic Tac Toe</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/css?family=Oxanium&amp;=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&amp;display=swap" rel="stylesheet">
@@ -90,14 +90,8 @@
                 New Game
               </a>
               <div id="new-game-drop" class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <form id="new-game" class="hide">
-                  <fieldset>
-                    <input id="pvp-game" type="submit" value="PvP" class="btn btn-outline-dark my-2 my-sm-0">
-                  </fieldset>
-                  <!-- <fieldset>
-                    <input id="ai-game" type="submit" value="AI" class="btn btn-outline-dark my-2 my-sm-0">
-                  </fieldset> -->
-                </form>
+                    <button id="pvp-game" type="submit" value="PvP" class="btn btn-outline-dark my-2 my-sm-0">PvP</button>
+                    <button id="ai-game" type="submit" value="AI" class="btn btn-outline-dark my-2 my-sm-0">AI</button>
               </div>
             </li>
             <!-- Stats Button -->
@@ -133,7 +127,7 @@
           <div id="8" class="col-4 box game-box border border-white rounded"></div>
         </div>
       </div>
-      <div class="container message-box rounded border border-white hidden col-3">
+      <div class="container message-box rounded border border-white hidden col-4">
         <p id='game-state-message' class="hidden">Turn: <span id="game-state-span"></span></p>
         <p id='invalid-move-message'>&nbsp;</p>
       </div>

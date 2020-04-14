@@ -49,6 +49,8 @@ const checkDraw = function () {
 
 const newGame = function (event) {
   event.preventDefault()
+  store.gameType = 'pvp'
+  console.log(store.gameType)
   store.turn = 'X'
   gameApi.createGame()
     .then(ui.newGameSuccess)
