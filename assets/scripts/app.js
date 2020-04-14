@@ -34,6 +34,8 @@ $(() => {
   // Show stats
   $('#stats-btn').on('click', gameEvents.showCount)
 
+  // guest login
+  $('#guest').on('click', authEvents.onGuestSignIn)
   // Account actions
   $('#sign-up-btn').on('click', authEvents.onSignUp)
   $('#sign-in-btn').on('click', authEvents.onSignIn)

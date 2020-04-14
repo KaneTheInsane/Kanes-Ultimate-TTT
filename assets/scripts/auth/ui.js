@@ -41,6 +41,23 @@ const signInSuccess = function (data) {
   store.user = data.user
 }
 
+const signInGuestSuccess = function (data) {
+  // console.log(data)
+  $('#api-message').text('Welcome Guest!')
+  $('#api-message').removeClass()
+  $('#api-message').addClass('success')
+  $('#new-game-btn').removeClass('hidden')
+  $('#change-password-btn').removeClass('hidden')
+  $('#sign-out-btn').removeClass('hidden')
+  $('#sign-in-menu').addClass('hidden')
+  $('#sign-up-menu').addClass('hidden')
+  $('#guest').addClass('hidden')
+  $('form input[type="text"]').val('')
+  $('form input[type="password"]').val('')
+  // console.log('signInSuccess data is: ', data)
+  store.user = data.user
+}
+
 const signInFailure = function () {
   $('#api-message').text('Error on sign in')
   $('#api-message').removeClass()
@@ -79,6 +96,7 @@ const signOutSuccess = function (data) {
   $('#new-game-btn').addClass('hidden')
   $('#stats-btn').addClass('hidden')
   $('#sign-out-btn').addClass('hidden')
+  $('#guest').removeClass('hidden')
   $('.box').text('')
   $('#game-state-message').text('')
   $('#invalid-move-message').text('')
@@ -159,5 +177,6 @@ module.exports = {
   newGameFailure,
   guestLogin,
   getGameCountSuccess,
-  getGameCountFailure
+  getGameCountFailure,
+  signInGuestSuccess
 }

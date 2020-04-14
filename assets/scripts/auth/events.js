@@ -17,6 +17,7 @@ const onSignIn = function (event) {
   event.preventDefault()
   // console.log('Signing in')
   const data = getFormFields($('#sign-in')[0])
+  console.log(data)
   api.signIn(data)
     .then(ui.signInSuccess)
     .catch(ui.signInFailure)
@@ -43,9 +44,23 @@ const onSignOut = function (event) {
   }
 }
 
+const onGuestSignIn = function (event) {
+  event.preventDefault()
+  // console.log('Signing in')
+  const data = { credentials: {
+    email: 'guest',
+    password: 'guest'
+  }
+  }
+  api.signIn(data)
+    .then(ui.signInGuestSuccess)
+    .catch(ui.signInFailure)
+}
+
 module.exports = {
   onSignUp,
   onSignIn,
   onChangePassword,
-  onSignOut
+  onSignOut,
+  onGuestSignIn
 }
