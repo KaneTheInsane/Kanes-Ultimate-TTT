@@ -25,7 +25,7 @@ const signUpFailure = function () {
 
 const signInSuccess = function (data) {
   // console.log(data)
-  $('#api-message').text('You are signed as ' + data.user.email)
+  $('#api-message').text('Welcome ' + data.user.email + '!')
   $('#api-message').removeClass()
   $('#api-message').addClass('success')
   $('#stats-btn').removeClass('hidden')
@@ -110,7 +110,7 @@ const newGameSuccess = function (gameData) {
   $('#game-state-message').text('Turn: X')
   // $('#game-state-message').append(store.span)
   // $('#game-state-span').text('X')
-  $('#invalid-move-message').text('')
+  $('#invalid-move-message').html('&nbsp;')
   store.game = gameData
   // console.log(gameData.game.id)
   store.currentID = gameData.game.id

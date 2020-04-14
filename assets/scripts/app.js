@@ -40,4 +40,7 @@ $(() => {
   $('#change-password').on('submit', authEvents.onChangePassword)
   $('#sign-out-btn').on('submit', authEvents.onSignOut)
   $('#guest').on('submit', ui.guestLogin)
+
+  // restart Button
+  $('.message-box').on('click', '.restart', gameEvents.newGame)
 })

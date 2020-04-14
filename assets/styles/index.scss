@@ -8,7 +8,7 @@ $error: #f00;
 $success: #0f0;
 $footer: #452e4d;
 $main-font: 'Oxanium', cursive;
-$secret: #8c9fc2;
+$secret: #f2f2f2;
 
 * {
   justify-content: center;
@@ -16,21 +16,29 @@ $secret: #8c9fc2;
 }
 
 body {
+  background-attachment: fixed;
   background-color: $body-bg-color;
+  background-image: url('https://imgur.com/8iQoeY2.gif');
+  background-repeat: no-repeat;
+  background-size: cover;
   clear: both;
+  color: $secret;
   margin-bottom: 100px;
 }
 
 h1 {
-  background-color: $accent-color;
   color: $font-color;
   font-family: $main-font;
   padding: 20px;
   text-align: left;
 }
 
+#api-message {
+  font-family: $main-font;
+}
+
 footer {
-  background: $footer;
+  background-image: linear-gradient(#6b00b3, $footer);
   bottom: 0;
   height: 70px;
   justify-content: center;
@@ -48,21 +56,23 @@ input {
 }
 
 nav {
-  align-items: center;
-  background-color: $accent-color;
+  background-image: linear-gradient($accent-color, $body-bg-color);
   display: flex;
-  justify-content: center;
-  vertical-align: middle;
+}
+
+.account {
+  margin-left: auto;
 }
 
 .btn {
   margin: 10px;
 }
 
-.container {
-  margin-bottom: 50px;
-  margin-top: 50px;
-  max-width: 420px;
+.message-box {
+  background-color: $secondary;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 150%;
+  margin-top: 10px;
 }
 
 .nav-item {
@@ -70,11 +80,16 @@ nav {
   vertical-align: middle;
 }
 
+.game-container {
+  margin-bottom: 10px;
+  margin-top: 80px;
+  max-width: 420px;
+}
+
 .game-box {
   align-items: center;
   background-color: $secondary;
-  border: 1px solid $accent-color;
-  color: $font-color;
+  color: $secret;
   display: flex;
   font-family: 'Press Start 2P', cursive;
   font-size: 300%;
@@ -118,6 +133,7 @@ nav {
 
 .modal-header {
   border-bottom: 0 none;
+  color: $font-color;
 }
 
 .modal-footer {

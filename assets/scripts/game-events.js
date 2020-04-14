@@ -4,7 +4,7 @@ const gameApi = require('./game-api/game-api')
 const ui = require('./auth/ui')
 
 const changeTurn = function () {
-  $('#invalid-move-message').text('')
+  $('#invalid-move-message').html('&nbsp;')
   if (store.turn === 'X') {
     store.turn = 'O'
     $('#game-state-message').text('Turn: ' + store.turn)
@@ -94,7 +94,7 @@ const fillSpace = function (event) {
       }
     }
   } else if (store.game.game.over === true) {
-    $('#invalid-move-message').text('Game is over')
+    $('#invalid-move-message').html('Game is over <button class="btn btn-outline-light restart">restart?</button>')
   } else {
     $('#invalid-move-message').text('Invalid move')
   }
