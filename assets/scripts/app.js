@@ -13,14 +13,16 @@ const store = require('./store.js')
 
 $(() => {
   $('#pvp-game').on('click', gameEventsNoAI.newGame)
-  $('#ai-game').on('click', gameEventsAI.newGame)
+  $('#easy-ai-game').on('click', gameEventsAI.newEasyGame)
+  $('#medium-ai-game').on('click', gameEventsAI.newMedGame)
+  $('#hard-ai-game').on('click', gameEventsAI.newHardGame)
 
   // Move on game board
   $('.box').on('click', function (event) {
     if (store.gameType === 'pvp') {
       console.log('pvp click')
       gameEventsNoAI.fillSpace(event)
-    } else {
+    } else if (store.aiLevel === 'easy') {
       gameEventsAI.fillSpace(event)
     }
   })
@@ -44,8 +46,8 @@ $(() => {
   $('.message-box').on('click', '.restart', function (event) {
     if (store.gameType === 'pvp') {
       gameEventsNoAI.newGame(event)
-    } else {
-      gameEventsAI.newGame(event)
+    } else if (store.aiLevel === 'easy') {
+      gameEventsAI.newEasyGame(event)
     }
   })
 })

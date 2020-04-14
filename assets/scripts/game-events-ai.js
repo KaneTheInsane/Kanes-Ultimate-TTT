@@ -7,7 +7,13 @@ const changeTurn = function () {
   $('#invalid-move-message').text('')
   if (store.pveTurn === 'Player') {
     store.pveTurn = 'AI'
-    aiFillSpace()
+    if (store.aiLevel === 'easy') {
+      easyAiFillSpace()
+    } else if (store.aiLevel === 'medium') {
+      easyAiFillSpace()
+    } else {
+      easyAiFillSpace()
+    }
     $('#game-state-span').text(store.pveTurn)
     $('#game-state-span').removeClass()
     $('#game-state-span').addClass('o')
@@ -38,7 +44,7 @@ const winner = function () {
 
 const checkWin = function () {
   for (let i = 0; i < 8; i++) {
-    if (store.winCondition[i].every(v => store.game.game.cells[v] === 'x') || store.winCondition[i].every(v => store.game.game.cells[v] === 'o')) {
+    if (store.winCondition[i].every(v => store.game.game.cells[v] === 'X') || store.winCondition[i].every(v => store.game.game.cells[v] === 'O')) {
       winner()
     }
   }
@@ -52,9 +58,10 @@ const checkDraw = function () {
   }
 }
 
-const newGame = function (event) {
+const newEasyGame = function (event) {
   event.preventDefault()
   store.gameType = 'ai'
+  store.aiLevel = 'easy'
   console.log(store.gameType)
   store.pveTurn = 'Player'
   gameApi.createGame()
@@ -62,13 +69,13 @@ const newGame = function (event) {
     .catch(ui.newGameFailure)
 }
 
-const aiFillSpace = function () {
+const easyAiFillSpace = function () {
   const random = getRandomInt(9)
   console.log(random)
   if (store.game.game.cells[random] === '') {
     $(`.box[id=${random}]`).text('O')
     $(`.box[id=${random}]`).addClass('o')
-    store.game.game.cells.splice(random, 1, 'o')
+    store.game.game.cells.splice(random, 1, 'O')
     console.log(store.game.game.cells)
     if (checkWin() === true) {
       winner()
@@ -80,7 +87,7 @@ const aiFillSpace = function () {
     }
   } else {
     console.log('space filled')
-    aiFillSpace()
+    easyAiFillSpace()
   }
 }
 
@@ -107,10 +114,10 @@ const fillSpace = function (event) {
     })
     let turnPiece = ''
     if (store.pveTurn === 'Player') {
-      turnPiece = 'x'
+      turnPiece = 'X'
       $(event.target).addClass('x')
     } else {
-      turnPiece = 'o'
+      turnPiece = 'O'
       $(event.target).addClass('o')
     }
     store.game.game.cells.splice(position, 1, turnPiece)
@@ -171,6 +178,6 @@ const fillSpace = function (event) {
 
 module.exports = {
   fillSpace,
-  newGame,
+  newEasyGame,
   showCount
 }
