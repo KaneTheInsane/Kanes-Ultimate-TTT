@@ -32,6 +32,7 @@ const signInSuccess = function (data) {
   $('#new-game-btn').removeClass('hidden')
   $('#change-password-btn').removeClass('hidden')
   $('#sign-out-btn').removeClass('hidden')
+  $('#about-menu').removeClass('hidden')
   $('#sign-in-menu').addClass('hidden')
   $('#sign-up-menu').addClass('hidden')
   $('#guest').addClass('hidden')
@@ -47,8 +48,8 @@ const signInGuestSuccess = function (data) {
   $('#api-message').removeClass()
   $('#api-message').addClass('success')
   $('#new-game-btn').removeClass('hidden')
-  $('#change-password-btn').removeClass('hidden')
   $('#sign-out-btn').removeClass('hidden')
+  $('#about-menu').removeClass('hidden')
   $('#sign-in-menu').addClass('hidden')
   $('#sign-up-menu').addClass('hidden')
   $('#guest').addClass('hidden')
@@ -102,6 +103,7 @@ const signOutSuccess = function (data) {
   $('#invalid-move-message').text('')
   $('form input[type="text"]').val('')
   $('form input[type="password"]').val('')
+  $('#about-menu').addClass('hidden')
   // console.log('signOutSuccess data is: ', data)
 }
 
@@ -125,7 +127,9 @@ const newGameSuccess = function (gameData) {
   $('.box').removeClass('x')
   $('.box').removeClass('o')
   $('#invalid-move-message').removeClass()
-  $('#game-state-message').text('Turn: X')
+  if (store.gameType === 'pvp') {
+    $('#game-state-message').text('Turn: X')
+  }
   // $('#game-state-message').append(store.span)
   // $('#game-state-span').text('X')
   $('#invalid-move-message').html('&nbsp;')

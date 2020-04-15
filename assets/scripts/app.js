@@ -22,7 +22,7 @@ $(() => {
     if (store.gameType === 'pvp') {
       console.log('pvp click')
       gameEventsNoAI.fillSpace(event)
-    } else if (store.aiLevel === 'easy') {
+    } else {
       gameEventsAI.fillSpace(event)
     }
   })
@@ -46,8 +46,12 @@ $(() => {
   $('.message-box').on('click', '.restart', function (event) {
     if (store.gameType === 'pvp') {
       gameEventsNoAI.newGame(event)
-    } else if (store.aiLevel === 'easy') {
+    } else if (store.aiLevel === 'Randometric') {
       gameEventsAI.newEasyGame(event)
+    } else if (store.aiLevel === 'Mechanico') {
+      gameEventsAI.newMedGame(event)
+    } else {
+      gameEventsAI.newHardGame(event)
     }
   })
 })

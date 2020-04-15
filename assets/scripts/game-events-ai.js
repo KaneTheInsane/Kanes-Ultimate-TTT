@@ -4,24 +4,18 @@ const gameApi = require('./game-api/game-api')
 const ui = require('./auth/ui')
 
 const changeTurn = function () {
-  $('#invalid-move-message').text('')
+  $('#invalid-move-message').html('&nbsp;')
   if (store.pveTurn === 'Player') {
     store.pveTurn = 'AI'
-    if (store.aiLevel === 'easy') {
+    if (store.aiLevel === 'Randometric') {
       easyAiFillSpace()
-    } else if (store.aiLevel === 'medium') {
-      easyAiFillSpace()
+    } else if (store.aiLevel === 'Mechanico') {
+      medAiFillSpace()
     } else {
-      easyAiFillSpace()
+      hardAiFillSpace()
     }
-    $('#game-state-span').text(store.pveTurn)
-    $('#game-state-span').removeClass()
-    $('#game-state-span').addClass('o')
   } else {
     store.pveTurn = 'Player'
-    $('#game-state-span').text(store.pveTurn)
-    $('#game-state-span').removeClass()
-    $('#game-state-span').addClass('x')
   }
 }
 
@@ -38,7 +32,12 @@ function getRandomInt (max) {
 
 const winner = function () {
   store.game.game.over = true
-  $('#game-state-message').text(store.pveTurn + ' is the winner')
+  if (store.pveTurn === 'Player') {
+    store.winningPlayer = store.user.email
+  } else {
+    store.winningPlayer = store.aiLevel
+  }
+  $('#game-state-message').text(store.winningPlayer + ' wins!')
   gameApi.updateGame(store.game)
 }
 
@@ -58,11 +57,48 @@ const checkDraw = function () {
   }
 }
 
+const newHardGame = function (event) {
+  event.preventDefault()
+  store.gameType = 'ai'
+  store.aiLevel = 'Minimaximus'
+  $('#player-2-label').text(store.aiLevel)
+  $('#game-state-message').html(store.user.email + ' vs ' + store.aiLevel)
+  $('#right-box').removeClass('player-box easy-ai-box medium-ai-box minimaximus-box')
+  $('#left-box').removeClass('player-box easy-ai-box medium-ai-box minimaximus-box')
+  $('#right-box').addClass('minimaximus-box')
+  $('#left-box').addClass('player-box')
+  store.pveTurn = 'Player'
+  gameApi.createGame()
+    .then(ui.newGameSuccess)
+    .catch(ui.newGameFailure)
+}
+
+const newMedGame = function (event) {
+  event.preventDefault()
+  store.gameType = 'ai'
+  store.aiLevel = 'Mechanico'
+  $('#player-2-label').text(store.aiLevel)
+  $('#game-state-message').html(store.user.email + ' vs ' + store.aiLevel)
+  $('#right-box').removeClass('player-box easy-ai-box medium-ai-box minimaximus-box')
+  $('#left-box').removeClass('player-box easy-ai-box medium-ai-box minimaximus-box')
+  $('#right-box').addClass('medium-ai-box')
+  $('#left-box').addClass('player-box')
+  store.pveTurn = 'Player'
+  gameApi.createGame()
+    .then(ui.newGameSuccess)
+    .catch(ui.newGameFailure)
+}
+
 const newEasyGame = function (event) {
   event.preventDefault()
   store.gameType = 'ai'
-  store.aiLevel = 'easy'
-  console.log(store.gameType)
+  store.aiLevel = 'Randometric'
+  $('#player-2-label').text(store.aiLevel)
+  $('#game-state-message').html(store.user.email + ' vs ' + store.aiLevel)
+  $('#right-box').removeClass('player-box easy-ai-box medium-ai-box minimaximus-box')
+  $('#left-box').removeClass('player-box easy-ai-box medium-ai-box minimaximus-box')
+  $('#right-box').addClass('easy-ai-box')
+  $('#left-box').addClass('player-box')
   store.pveTurn = 'Player'
   gameApi.createGame()
     .then(ui.newGameSuccess)
@@ -86,9 +122,48 @@ const easyAiFillSpace = function () {
       }
     }
   } else {
-    console.log('space filled')
     easyAiFillSpace()
   }
+}
+
+const medAiFillSpace = function () {
+  const random = getRandomInt(4)
+  if ((store.game.game.over === false) && (store.game.game.cells[4] === '')) {
+    $('#4').text('O')
+    $('#4').addClass('o')
+    store.game.game.cells.splice(4, 1, 'O')
+    if (checkWin() === true) {
+      winner()
+    } else {
+      checkDraw()
+      if (store.game.game.over === false) {
+        changeTurn()
+      }
+    }
+  } else if (store.game.game.over === false && $(`#${store.corners[random]}`).text() === '') {
+    $(`#${store.corners[random]}`).text('O')
+    $(`#${store.corners[random]}`).addClass('o')
+    store.game.game.cells.splice(store.corners[random], 1, 'O')
+    if (checkWin() === true) {
+      winner()
+    } else {
+      checkDraw()
+      if (store.game.game.over === false) {
+        changeTurn()
+      }
+    }
+  } else if (store.game.game.over === false && $(`#${store.sides[random]}`).text() === '') {
+    $(`#${store.sides[random]}`).text('O')
+    $(`#${store.sides[random]}`).addClass('o')
+    store.game.game.cells.splice(store.sides[random], 1, 'O')
+    changeTurn()
+  } else {
+    medAiFillSpace()
+  }
+}
+
+const hardAiFillSpace = function () {
+  console.log('To be built')
 }
 
 const fillSpace = function (event) {
@@ -179,5 +254,7 @@ const fillSpace = function (event) {
 module.exports = {
   fillSpace,
   newEasyGame,
+  newMedGame,
+  newHardGame,
   showCount
 }

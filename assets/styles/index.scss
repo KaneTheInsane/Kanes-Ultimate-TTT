@@ -48,7 +48,7 @@ footer {
 }
 
 a {
-  color: $accent-color;
+  color: $body-bg-color;
 }
 
 input {
@@ -75,6 +75,13 @@ nav {
   margin-top: 10px;
 }
 
+.message-box-player {
+  background-color: $secondary;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 90%;
+  margin-top: 10px;
+}
+
 .nav-item {
   align-items: center;
   vertical-align: middle;
@@ -84,6 +91,7 @@ nav {
   margin-bottom: 10px;
   margin-top: 80px;
   max-width: 420px;
+  position: center;
 }
 
 .game-box {
@@ -96,6 +104,45 @@ nav {
   height: 140px;
   justify-content: center;
   width: 100px;
+}
+
+.player-icon {
+  align-items: flex-end;
+  display: flex;
+}
+
+.player-box {
+  background-image: url('https://imgur.com/UI0rOXr.gif');
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.easy-ai-box {
+  background-image: url('https://imgur.com/cjgxXnh.gif');
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.medium-ai-box {
+  background-image: url('https://imgur.com/bPG0RIz.gif');
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.minimaximus-box {
+  background-image: url('https://imgur.com/wN3X1hb.gif');
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.about-info {
+  color: $secondary;
+  padding-bottom: 40px;
+}
+
+.game-button {
+  margin: 8px;
+  margin-bottom: 5px;
 }
 
 .hidden {

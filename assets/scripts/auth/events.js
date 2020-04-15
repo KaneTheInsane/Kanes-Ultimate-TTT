@@ -48,7 +48,7 @@ const onGuestSignIn = function (event) {
   event.preventDefault()
   // console.log('Signing in')
   const data = { credentials: {
-    email: 'guest',
+    email: 'Guest',
     password: 'guest'
   }
   }

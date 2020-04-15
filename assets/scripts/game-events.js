@@ -50,6 +50,13 @@ const checkDraw = function () {
 const newGame = function (event) {
   event.preventDefault()
   store.gameType = 'pvp'
+  $('#player-2-label').text('Player 2')
+  $('#right-box').addClass('player-box easy-ai-box medium-ai-box minimaximus-box')
+  $('#left-box').addClass('player-box easy-ai-box medium-ai-box minimaximus-box')
+  $('#right-box').removeClass('player-box easy-ai-box medium-ai-box minimaximus-box')
+  $('#left-box').removeClass('player-box easy-ai-box medium-ai-box minimaximus-box')
+  $('#right-box').addClass('player-box')
+  $('#left-box').addClass('player-box')
   console.log(store.gameType)
   store.turn = 'X'
   gameApi.createGame()

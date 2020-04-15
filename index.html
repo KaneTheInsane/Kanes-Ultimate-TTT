@@ -70,6 +70,18 @@
               Guest
             </button>
             <ul class="navbar-nav mr-auto">
+              <!-- New game -->
+              <li class="nav-item dropdown my-2 my-lg-0">
+                <a class="nav-link btn btn-secondary my-2 my-sm-0 hidden" href="#" id="new-game-btn" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  New Game
+                </a>
+                <div id="new-game-drop" class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <button id="pvp-game" type="submit" value="PvP" class="btn btn-outline-dark my-2 my-sm-0 game-button">PvP</button>
+                  <button id="easy-ai-game" type="submit" value="AI" class="btn btn-outline-dark my-2 my-sm-0 game-button">Easy AI</button>
+                  <button id="medium-ai-game" type="submit" value="AI" class="btn btn-outline-dark my-2 my-sm-0 game-button">Medium AI</button>
+                  <!-- <button id="hard-ai-game" type="submit" value="AI" class="btn btn-outline-dark my-2 my-sm-0">Hard AI</button> -->
+                </div>
+              </li>
             <!-- Change Password -->
             <li class="nav-item dropdown my-2 my-lg-0">
               <a class="nav-link btn btn-secondary my-2 my-sm-0 hidden" href="#" id="change-password-btn" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -84,18 +96,6 @@
                 </form>
               </div>
             </li>
-            <!-- New game -->
-            <li class="nav-item dropdown my-2 my-lg-0">
-              <a class="nav-link btn btn-secondary my-2 my-sm-0 hidden" href="#" id="new-game-btn" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                New Game
-              </a>
-              <div id="new-game-drop" class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <button id="pvp-game" type="submit" value="PvP" class="btn btn-outline-dark my-2 my-sm-0">PvP</button>
-                    <button id="easy-ai-game" type="submit" value="AI" class="btn btn-outline-dark my-2 my-sm-0">Easy AI</button>
-                    <button id="medium-ai-game" type="submit" value="AI" class="btn btn-outline-dark my-2 my-sm-0">Medium AI</button>
-                    <button id="hard-ai-game" type="submit" value="AI" class="btn btn-outline-dark my-2 my-sm-0">Hard AI</button>
-              </div>
-            </li>
             <!-- Stats Button -->
             <li class="nav-item dropdown my-2 my-lg-0">
               <a class="nav-link btn btn-secondary my-2 my-sm-0 hidden" href="#" id="stats-btn" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -104,6 +104,27 @@
               <div id="stats-drop" class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <p id='count'></p>
             </div>
+            </li>
+            <li>
+              <button id="about-menu" class="btn btn-secondary my-2 my-sm-0 hidden" role="button" data-target="#aboutModal" data-toggle="modal" aria-haspopup="true" aria-expanded="false">
+                About
+              </button>
+              <!-- Modal -->
+              <div class="modal fade" id="aboutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="about-info modal-body">
+                      Design, Sprites and Music: <a href="https://github.com/ArKaneVision" target="_blank">Kane Two Feathers</a><br>
+                      Background image: Reddit user <a href="https://www.reddit.com/user/Kisaoda/" target="_blank">Kisaoda</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </li>
             <!-- Sign out -->
             <li>
@@ -115,8 +136,15 @@
           <!-- API Messages -->
           <h2 id="api-message"></h2>
       </nav>
+      <div class="container-fluid">
+      <div class='row'>
+      <div id='left-box' class="col-4 player-icon">
+        <div class="container message-box-player rounded border border-white hidden col-4">
+          <p>Player 1</p>
+        </div>
+      </div>
       <!-- Game Board -->
-      <div class=" container game-container hidden">
+      <div class="container game-container hidden">
         <div class="row border border-white rounded">
           <div id="0" class="col-4 box game-box border border-white rounded"></div>
           <div id="1" class="col-4 box game-box border border-white"></div>
@@ -129,6 +157,13 @@
           <div id="8" class="col-4 box game-box border border-white rounded"></div>
         </div>
       </div>
+      <div id='right-box' class="col-4 player-icon">
+        <div class="container message-box-player rounded border border-white hidden col-4">
+          <p id='player-2-label'>Player 2</p>
+        </div>
+      </div>
+    </div>
+  </div>
       <div class="container message-box rounded border border-white hidden col-4">
         <p id='game-state-message' class="hidden">Turn: <span id="game-state-span"></span></p>
         <p id='invalid-move-message'>&nbsp;</p>
@@ -141,5 +176,6 @@
       <footer id="sticky-footer" class="py-4 accent">
         <a class="nav-link" href="https://www.linkedin.com/in/kanetwofeathers/" target="_blank">© Kane Two Feathers 2020</a>
       </footer>
+      <div class='minimaximus-box col-4'></div>
     </body>
 </html>
