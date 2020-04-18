@@ -3,34 +3,53 @@ const store = require('./store')
 const gameApi = require('./game-api/game-api')
 const ui = require('./auth/ui')
 
-const changeTurn = function () {
+const huPlayer = 'O'
+const aiPlayer = 'X'
+const winCondition = [
+  [0, 1, 2],
+  [3, 4, 5],
+  [6, 7, 8],
+  [0, 3, 6],
+  [1, 4, 7],
+  [2, 5, 8],
+  [2, 4, 6],
+  [0, 4, 8]
+]
+
+function changeTurn () {
   $('#invalid-move-message').html('&nbsp;')
   if (store.pveTurn === 'Player') {
     store.pveTurn = 'AI'
     if (store.aiLevel === 'Randometric') {
-      easyAiFillSpace()
+      easyAiMove()
     } else if (store.aiLevel === 'Mechanico') {
-      medAiFillSpace()
+      medAiMove()
     } else {
-      hardAiFillSpace()
+      hardAiMove()
     }
   } else {
     store.pveTurn = 'Player'
   }
 }
 
-const showCount = function (event) {
-  event.preventDefault()
-  gameApi.getGameCount()
-    .then(ui.getGameCountSuccess)
-    .catch(ui.getGameCountFailure)
-}
-
 function getRandomInt (max) {
   return Math.floor(Math.random() * Math.floor(max))
 }
 
-const winner = function () {
+function checkWin (board, player) {
+  const plays = board.reduce((a, e, i) =>
+    (e === player) ? a.concat(i) : a, [])
+  let gameWon = null
+  for (const [index, win] of winCondition.entries()) {
+    if (win.every(elem => plays.indexOf(elem) > -1)) {
+      gameWon = {index: index, player: player}
+      break
+    }
+  }
+  return gameWon
+}
+
+function gameOver (gameWon) {
   store.game.game.over = true
   if (store.pveTurn === 'Player') {
     store.winningPlayer = store.user.email
@@ -39,82 +58,66 @@ const winner = function () {
   }
   $('#game-state-message').text(store.winningPlayer + ' wins!')
   gameApi.updateGame(store.game)
-}
-
-const checkWin = function () {
-  for (let i = 0; i < 8; i++) {
-    if (store.winCondition[i].every(v => store.game.game.cells[v] === 'X') || store.winCondition[i].every(v => store.game.game.cells[v] === 'O')) {
-      winner()
-    }
-  }
+  $('#invalid-move-message').html('Game is over <button class="btn btn-outline-light restart">restart?</button>')
 }
 
 const checkDraw = function () {
-  if ((store.game.game.cells.every(v => v !== '')) && (store.game.game.over === false)) {
+  if ((store.game.game.cells.every(v => typeof v !== 'number')) && (store.game.game.over === false)) {
     $('#game-state-message').text('Draw!')
+    $('#invalid-move-message').html('Game is over <button class="btn btn-outline-light restart">restart?</button>')
     store.game.game.over = true
     gameApi.updateGame(store.game)
   }
 }
 
-const newHardGame = function (event) {
-  event.preventDefault()
-  store.gameType = 'ai'
-  store.aiLevel = 'Minimaximus'
-  $('#player-2-label').text(store.aiLevel)
-  $('#game-state-message').html(store.user.email + ' vs ' + store.aiLevel)
-  $('#right-box').removeClass('player-box easy-ai-box medium-ai-box minimaximus-box')
-  $('#left-box').removeClass('player-box easy-ai-box medium-ai-box minimaximus-box')
-  $('#right-box').addClass('minimaximus-box')
-  $('#left-box').addClass('player-box')
-  store.pveTurn = 'Player'
-  gameApi.createGame()
-    .then(ui.newGameSuccess)
-    .catch(ui.newGameFailure)
+function emptySquares () {
+  return store.game.game.cells.filter(s => typeof s === 'number')
 }
 
-const newMedGame = function (event) {
-  event.preventDefault()
-  store.gameType = 'ai'
-  store.aiLevel = 'Mechanico'
-  $('#player-2-label').text(store.aiLevel)
-  $('#game-state-message').html(store.user.email + ' vs ' + store.aiLevel)
-  $('#right-box').removeClass('player-box easy-ai-box medium-ai-box minimaximus-box')
-  $('#left-box').removeClass('player-box easy-ai-box medium-ai-box minimaximus-box')
-  $('#right-box').addClass('medium-ai-box')
-  $('#left-box').addClass('player-box')
-  store.pveTurn = 'Player'
-  gameApi.createGame()
-    .then(ui.newGameSuccess)
-    .catch(ui.newGameFailure)
+function bestSpot () {
+  return minimax(store.game.game.cells, aiPlayer).index
 }
 
-const newEasyGame = function (event) {
-  event.preventDefault()
-  store.gameType = 'ai'
+function setAiEasy () {
   store.aiLevel = 'Randometric'
+  newGame()
+}
+
+function setAiMed () {
+  store.aiLevel = 'Mechanico'
+  newGame()
+}
+
+function setAiHard () {
+  store.aiLevel = 'Minimaximus'
+  newGame()
+}
+
+function newGame () {
+  store.gameType = 'ai'
+  store.game.game.cells = [0, 1, 2, 3, 4, 5, 6, 7, 8]
   $('#player-2-label').text(store.aiLevel)
   $('#game-state-message').html(store.user.email + ' vs ' + store.aiLevel)
-  $('#right-box').removeClass('player-box easy-ai-box medium-ai-box minimaximus-box')
-  $('#left-box').removeClass('player-box easy-ai-box medium-ai-box minimaximus-box')
-  $('#right-box').addClass('easy-ai-box')
+  $('#right-box').removeClass('player-box Randometric-box Mechanico-ai-box Minimaximus-box')
+  $('#left-box').removeClass('player-box Randometric-box Mechanico-ai-box Minimaximus-box')
+  $('#right-box').addClass(`${store.aiLevel}-box`)
   $('#left-box').addClass('player-box')
-  store.pveTurn = 'Player'
   gameApi.createGame()
     .then(ui.newGameSuccess)
     .catch(ui.newGameFailure)
 }
 
-const easyAiFillSpace = function () {
+function easyAiMove () {
   const random = getRandomInt(9)
-  console.log(random)
-  if (store.game.game.cells[random] === '') {
-    $(`.box[id=${random}]`).text('O')
-    $(`.box[id=${random}]`).addClass('o')
-    store.game.game.cells.splice(random, 1, 'O')
+  if (typeof store.game.game.cells[random] === 'number') {
+    $(`.box[id=${random}]`).text(aiPlayer)
+    $(`.box[id=${random}]`).addClass(aiPlayer.toLowerCase())
+    store.game.game.cells.splice(random, 1, aiPlayer)
+    console.log(store.game)
     console.log(store.game.game.cells)
-    if (checkWin() === true) {
-      winner()
+    const gameWon = checkWin(store.game.game.cells, aiPlayer)
+    if (gameWon) {
+      gameOver(gameWon)
     } else {
       checkDraw()
       if (store.game.game.over === false) {
@@ -122,62 +125,137 @@ const easyAiFillSpace = function () {
       }
     }
   } else {
-    easyAiFillSpace()
+    easyAiMove()
   }
 }
 
-const medAiFillSpace = function () {
+function medAiMove () {
   const random = getRandomInt(4)
-  if ((store.game.game.over === false) && (store.game.game.cells[4] === '')) {
-    $('#4').text('O')
-    $('#4').addClass('o')
-    store.game.game.cells.splice(4, 1, 'O')
-    if (checkWin() === true) {
-      winner()
+  if ((store.game.game.over === false) && (typeof store.game.game.cells[4] === 'number')) {
+    $('#4').text(aiPlayer)
+    $('#4').addClass(aiPlayer.toLowerCase())
+    store.game.game.cells.splice(4, 1, aiPlayer)
+    const gameWon = checkWin(store.game.game.cells, aiPlayer)
+    if (gameWon) {
+      gameOver(gameWon)
     } else {
       checkDraw()
       if (store.game.game.over === false) {
         changeTurn()
       }
     }
-  } else if (store.game.game.over === false && $(`#${store.corners[random]}`).text() === '') {
-    $(`#${store.corners[random]}`).text('O')
-    $(`#${store.corners[random]}`).addClass('o')
-    store.game.game.cells.splice(store.corners[random], 1, 'O')
-    if (checkWin() === true) {
-      winner()
+  } else if (store.game.game.over === false && typeof store.game.game.cells[store.corners[random]] === 'number') {
+    $(`#${store.corners[random]}`).text(aiPlayer)
+    $(`#${store.corners[random]}`).addClass(aiPlayer.toLowerCase())
+    store.game.game.cells.splice(store.corners[random], 1, aiPlayer)
+    const gameWon = checkWin(store.game.game.cells, aiPlayer)
+    if (gameWon) {
+      gameOver(gameWon)
     } else {
       checkDraw()
       if (store.game.game.over === false) {
         changeTurn()
       }
     }
-  } else if (store.game.game.over === false && $(`#${store.sides[random]}`).text() === '') {
-    $(`#${store.sides[random]}`).text('O')
-    $(`#${store.sides[random]}`).addClass('o')
-    store.game.game.cells.splice(store.sides[random], 1, 'O')
-    changeTurn()
+  } else if (store.game.game.over === false && typeof store.game.game.cells[store.corners[random]] === 'number') {
+    $(`#${store.sides[random]}`).text(aiPlayer)
+    $(`#${store.sides[random]}`).addClass(aiPlayer.toLowerCase())
+    store.game.game.cells.splice(store.sides[random], 1, aiPlayer)
+    const gameWon = checkWin(store.game.game.cells, aiPlayer)
+    if (gameWon) {
+      gameOver(gameWon)
+    } else {
+      checkDraw()
+      if (store.game.game.over === false) {
+        changeTurn()
+      }
+    }
   } else {
-    medAiFillSpace()
+    medAiMove()
   }
 }
 
-const hardAiFillSpace = function () {
-  console.log('To be built')
+function hardAiMove () {
+  console.log(bestSpot())
+  $(`#${bestSpot()}`).text(aiPlayer)
+  $(`#${bestSpot()}`).addClass(aiPlayer.toLowerCase())
+  store.game.game.cells.splice(bestSpot(), 1, aiPlayer)
+  const gameWon = checkWin(store.game.game.cells, aiPlayer)
+  if (gameWon) {
+    gameOver(gameWon)
+  } else {
+    checkDraw()
+    if (store.game.game.over === false) {
+      changeTurn()
+    }
+  }
 }
 
-const fillSpace = function (event) {
+function minimax (newBoard, player) {
+  const availSpots = emptySquares()
+
+  if (checkWin(newBoard, huPlayer)) {
+    return {score: -10}
+  } else if (checkWin(newBoard, aiPlayer)) {
+    return {score: 10}
+  } else if (availSpots.length === 0) {
+    return {score: 0}
+  }
+  const moves = []
+  for (let i = 0; i < availSpots.length; i++) {
+    const move = {}
+    move.index = newBoard[availSpots[i]]
+    newBoard[availSpots[i]] = player
+
+    if (player === aiPlayer) {
+      const result = minimax(newBoard, huPlayer)
+      move.score = result.score
+    } else {
+      const result = minimax(newBoard, aiPlayer)
+      move.score = result.score
+    }
+
+    newBoard[availSpots[i]] = move.index
+
+    moves.push(move)
+  }
+
+  let bestMove
+  if (player === aiPlayer) {
+    let bestScore = -10000
+    for (let i = 0; i < moves.length; i++) {
+      if (moves[i].score > bestScore) {
+        bestScore = moves[i].score
+        bestMove = i
+      }
+    }
+  } else {
+    let bestScore = 10000
+    for (let i = 0; i < moves.length; i++) {
+      if (moves[i].score < bestScore) {
+        bestScore = moves[i].score
+        bestMove = i
+      }
+    }
+  }
+
+  return moves[bestMove]
+}
+
+const huMove = function (event) {
   event.preventDefault()
   // get the position in the aray that they moved to
   const position = event.target.id
   // get the curent text of the space the player chose
   const space = $(event.target).text()
   // if space is open
-  if (space !== 'X' && space !== 'O' && store.game.game.over === false) {
+  if (space === '' && store.game.game.over === false) {
     // add them to the boad
-    $(event.target).text('X')
-    // console.log(store.game)
-
+    $(event.target).text(huPlayer)
+    $(event.target).addClass(huPlayer.toLowerCase())
+    // Update local game board
+    store.game.game.cells.splice(position, 1, huPlayer)
+    // Update API game board
     gameApi.updateGame({
       'game': {
         'cell': {
@@ -187,74 +265,25 @@ const fillSpace = function (event) {
         'over': store.game.game.over
       }
     })
-    let turnPiece = ''
-    if (store.pveTurn === 'Player') {
-      turnPiece = 'X'
-      $(event.target).addClass('x')
-    } else {
-      turnPiece = 'O'
-      $(event.target).addClass('o')
-    }
-    store.game.game.cells.splice(position, 1, turnPiece)
     // check for winner
-    if (checkWin() === true) {
-      winner()
+    const gameWon = checkWin(store.game.game.cells, huPlayer)
+    if (gameWon) {
+      gameOver(gameWon)
     } else {
       checkDraw()
       if (store.game.game.over === false) {
         changeTurn()
       }
     }
-  } else if (store.game.game.over === true) {
-    $('#invalid-move-message').html('Game is over <button class="btn btn-outline-light restart">restart?</button>')
   } else {
     $('#invalid-move-message').text('Invalid move')
   }
 }
 
-//
-// const fillSpace = function (event) {
-//   console.log('AI game move')
-//   event.preventDefault()
-//   const position = event.target.id
-//   const space = $(event.target).text()
-//   if (space !== 'X' && space !== 'O' && store.game.game.over === false) {
-//     $(event.target).text('X')
-//     gameApi.updateGame({
-//       'game': {
-//         'cell': {
-//           'index': position,
-//           'value': store.turn
-//         },
-//         'over': store.game.game.over
-//       }
-//     })
-//
-//     if (store.pveTurn === 'Player') {
-//       $(event.target).addClass('x')
-//     } else {
-//       $(event.target).addClass('o')
-//     }
-//     store.game.game.cells.splice(position, 1, store.pveTurn)
-//     if (checkWin() === true) {
-//       winner()
-//     } else {
-//       checkDraw()
-//       if (store.game.game.over === false) {
-//         changeTurn()
-//       }
-//     }
-//   } else if (store.game.game.over === true) {
-//     $('#invalid-move-message').text('Game is over')
-//   } else {
-//     $('#invalid-move-message').text('Invalid move')
-//   }
-// }
-
 module.exports = {
-  fillSpace,
-  newEasyGame,
-  newMedGame,
-  newHardGame,
-  showCount
+  huMove,
+  setAiEasy,
+  setAiMed,
+  setAiHard,
+  newGame
 }

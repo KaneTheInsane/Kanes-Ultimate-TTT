@@ -17,31 +17,26 @@ const changeTurn = function () {
     $('#game-state-span').addClass('x')
   }
 }
-const showCount = function (event) {
-  event.preventDefault()
-  gameApi.getGameCount()
-    .then(ui.getGameCountSuccess)
-    .catch(ui.getGameCountFailure)
-}
 
 const winner = function () {
   store.game.game.over = true
   $('#game-state-message').text(store.turn + ' is the winner')
   gameApi.updateGame(store.game)
   $('.easter-egg').removeClass('hidden')
+  $('#invalid-move-message').html('Game is over <button class="btn btn-outline-light restart">restart?</button>')
 }
 
 const checkWin = function () {
   for (let i = 0; i < 8; i++) {
     if (store.winCondition[i].every(v => store.game.game.cells[v] === 'X') || store.winCondition[i].every(v => store.game.game.cells[v] === 'O')) {
-      // store.winCondition[i].every(v => $().addClass('winSquare'))
       winner()
     }
   }
 }
 const checkDraw = function () {
-  if ((store.game.game.cells.every(v => v !== '')) && (store.game.game.over === false)) {
+  if ((store.game.game.cells.every(v => typeof v !== 'number')) && (store.game.game.over === false)) {
     $('#game-state-message').text('Draw!')
+    $('#invalid-move-message').html('Game is over <button class="btn btn-outline-light restart">restart?</button>')
     store.game.game.over = true
     gameApi.updateGame(store.game)
   }
@@ -51,10 +46,10 @@ const newGame = function (event) {
   event.preventDefault()
   store.gameType = 'pvp'
   $('#player-2-label').text('Player 2')
-  $('#right-box').addClass('player-box easy-ai-box medium-ai-box minimaximus-box')
-  $('#left-box').addClass('player-box easy-ai-box medium-ai-box minimaximus-box')
-  $('#right-box').removeClass('player-box easy-ai-box medium-ai-box minimaximus-box')
-  $('#left-box').removeClass('player-box easy-ai-box medium-ai-box minimaximus-box')
+  $('#right-box').addClass('player-box Randometric-box Mechanico-box Minimaximus-box')
+  $('#left-box').addClass('player-box Randometric-box Mechanico-box Minimaximus-box')
+  $('#right-box').removeClass('player-box Randometric-box Mechanico-box Minimaximus-box')
+  $('#left-box').removeClass('player-box Randometric-box Mechanico-box Minimaximus-box')
   $('#right-box').addClass('player-box')
   $('#left-box').addClass('player-box')
   console.log(store.gameType)
@@ -65,6 +60,7 @@ const newGame = function (event) {
 }
 
 const fillSpace = function (event) {
+  console.log(store.game.game.cells)
   event.preventDefault()
   // get the position in the aray that they moved to
   const position = event.target.id
@@ -92,7 +88,6 @@ const fillSpace = function (event) {
       $(event.target).addClass('o')
     }
     store.game.game.cells.splice(position, 1, store.turn)
-    // console.log(store.game.game.cells)
     // check for winner
     if (checkWin() === true) {
       winner()
@@ -111,6 +106,5 @@ const fillSpace = function (event) {
 
 module.exports = {
   fillSpace,
-  newGame,
-  showCount
+  newGame
 }
