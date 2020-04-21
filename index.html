@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Ultimate Tic Tac Toe</title>
+    <title>Chip Tac Toe</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/css?family=Oxanium&amp;=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&amp;display=swap" rel="stylesheet">
     <!-- Do not add `link` tags-->
-    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" href="images/X-icon.png">
 
     <!-- Do not add `script` tags-->
     <script src="public/vendor.js" type="text/javascript" charset="utf-8" defer></script>
@@ -14,7 +14,7 @@
   </head>
   <body>
     <nav class="navbar navbar-expand">
-            <h1 class="accent">Ultimate Tic Tac Toe</h1>
+            <h1 class="accent">Chip Tac Toe</h1>
             <!-- Sign up -->
             <button id="sign-in-menu" class="btn btn-secondary my-2 my-sm-0" role="button" data-target="#signUpModal" data-toggle="modal" aria-haspopup="true" aria-expanded="false">
               Sign up
@@ -119,6 +119,10 @@
                       </button>
                     </div>
                     <div class="about-info modal-body">
+                      Welcome to Chip-Tac-Toe, an 8-bit themed game with 3 levels of AI to play against. This project was built for a software engineering immersive program at General Assembly<br>
+                      <br>
+                      The hard ai uses a minimax algorithm to pick the best possible move on the board, it is unbeatable<br>
+                      <br>
                       Design, Sprites and Music: <a href="https://github.com/ArKaneVision" target="_blank">Kane Two Feathers</a><br>
                       Background image: Reddit user <a href="https://www.reddit.com/user/Kisaoda/" target="_blank">Kisaoda</a>
                     </div>
@@ -140,7 +144,7 @@
       <div class='row'>
       <div id='left-box' class="col-4 player-icon">
         <div class="container message-box-player rounded border border-white hidden col-4">
-          <p>Player 1</p>
+          <p id='player-1-label'>Player 1: X</p>
         </div>
       </div>
       <!-- Game Board -->
@@ -159,7 +163,7 @@
       </div>
       <div id='right-box' class="col-4 player-icon">
         <div class="container message-box-player rounded border border-white hidden col-4">
-          <p id='player-2-label'>Player 2</p>
+          <p id='player-2-label'>Player 2: O</p>
         </div>
       </div>
     </div>

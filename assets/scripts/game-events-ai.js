@@ -5,6 +5,7 @@ const ui = require('./auth/ui')
 
 const huPlayer = 'O'
 const aiPlayer = 'X'
+let path = 0
 const winCondition = [
   [0, 1, 2],
   [3, 4, 5],
@@ -17,7 +18,9 @@ const winCondition = [
 ]
 
 function changeTurn () {
-  $('#invalid-move-message').html('&nbsp;')
+  if (store.game.game.over === false) {
+    $('#invalid-move-message').html('&nbsp;')
+  }
   if (store.pveTurn === 'Player') {
     store.pveTurn = 'AI'
     if (store.aiLevel === 'Randometric') {
@@ -61,7 +64,7 @@ function gameOver (gameWon) {
   $('#invalid-move-message').html('Game is over <button class="btn btn-outline-light restart">restart?</button>')
 }
 
-const checkDraw = function () {
+function checkDraw () {
   if ((store.game.game.cells.every(v => typeof v !== 'number')) && (store.game.game.over === false)) {
     $('#game-state-message').text('Draw!')
     $('#invalid-move-message').html('Game is over <button class="btn btn-outline-light restart">restart?</button>')
@@ -94,12 +97,15 @@ function setAiHard () {
 }
 
 function newGame () {
+  path = 0
+  store.pveTurn = 'Player'
   store.gameType = 'ai'
   store.game.game.cells = [0, 1, 2, 3, 4, 5, 6, 7, 8]
   $('#player-2-label').text(store.aiLevel)
+  $('#player-1-label').text(store.user.email)
   $('#game-state-message').html(store.user.email + ' vs ' + store.aiLevel)
-  $('#right-box').removeClass('player-box Randometric-box Mechanico-ai-box Minimaximus-box')
-  $('#left-box').removeClass('player-box Randometric-box Mechanico-ai-box Minimaximus-box')
+  $('#right-box').removeClass('player-box Randometric-box Mechanico-box Minimaximus-box')
+  $('#left-box').removeClass('player-box Randometric-box Mechanico-box Minimaximus-box')
   $('#right-box').addClass(`${store.aiLevel}-box`)
   $('#left-box').addClass('player-box')
   gameApi.createGame()
@@ -108,78 +114,52 @@ function newGame () {
 }
 
 function easyAiMove () {
-  const random = getRandomInt(9)
-  if (typeof store.game.game.cells[random] === 'number') {
-    $(`.box[id=${random}]`).text(aiPlayer)
-    $(`.box[id=${random}]`).addClass(aiPlayer.toLowerCase())
-    store.game.game.cells.splice(random, 1, aiPlayer)
-    console.log(store.game)
-    console.log(store.game.game.cells)
-    const gameWon = checkWin(store.game.game.cells, aiPlayer)
-    if (gameWon) {
-      gameOver(gameWon)
-    } else {
-      checkDraw()
-      if (store.game.game.over === false) {
-        changeTurn()
-      }
-    }
+  const spaces = emptySquares()
+  const random = getRandomInt(spaces.length)
+  $(`.box[id=${spaces[random]}]`).text(aiPlayer)
+  $(`.box[id=${spaces[random]}]`).addClass(aiPlayer.toLowerCase())
+  store.game.game.cells.splice(spaces[random], 1, aiPlayer)
+  const gameWon = checkWin(store.game.game.cells, aiPlayer)
+  if (gameWon) {
+    gameOver(gameWon)
   } else {
-    easyAiMove()
+    checkDraw()
+    if (store.game.game.over === false) {
+      changeTurn()
+    }
   }
 }
 
 function medAiMove () {
-  const random = getRandomInt(4)
-  if ((store.game.game.over === false) && (typeof store.game.game.cells[4] === 'number')) {
-    $('#4').text(aiPlayer)
-    $('#4').addClass(aiPlayer.toLowerCase())
-    store.game.game.cells.splice(4, 1, aiPlayer)
-    const gameWon = checkWin(store.game.game.cells, aiPlayer)
-    if (gameWon) {
-      gameOver(gameWon)
-    } else {
-      checkDraw()
-      if (store.game.game.over === false) {
-        changeTurn()
-      }
-    }
-  } else if (store.game.game.over === false && typeof store.game.game.cells[store.corners[random]] === 'number') {
-    $(`#${store.corners[random]}`).text(aiPlayer)
-    $(`#${store.corners[random]}`).addClass(aiPlayer.toLowerCase())
-    store.game.game.cells.splice(store.corners[random], 1, aiPlayer)
-    const gameWon = checkWin(store.game.game.cells, aiPlayer)
-    if (gameWon) {
-      gameOver(gameWon)
-    } else {
-      checkDraw()
-      if (store.game.game.over === false) {
-        changeTurn()
-      }
-    }
-  } else if (store.game.game.over === false && typeof store.game.game.cells[store.corners[random]] === 'number') {
-    $(`#${store.sides[random]}`).text(aiPlayer)
-    $(`#${store.sides[random]}`).addClass(aiPlayer.toLowerCase())
-    store.game.game.cells.splice(store.sides[random], 1, aiPlayer)
-    const gameWon = checkWin(store.game.game.cells, aiPlayer)
-    if (gameWon) {
-      gameOver(gameWon)
-    } else {
-      checkDraw()
-      if (store.game.game.over === false) {
-        changeTurn()
-      }
-    }
+  if (path < 2) {
+    path++
+    const bestBox = bestSpot()
+    $(`#${bestBox}`).text(aiPlayer)
+    $(`#${bestBox}`).addClass(aiPlayer.toLowerCase())
+    store.game.game.cells.splice(bestBox, 1, aiPlayer)
   } else {
-    medAiMove()
+    const spaces = emptySquares()
+    const random = getRandomInt(spaces.length)
+    $(`.box[id=${spaces[random]}]`).text(aiPlayer)
+    $(`.box[id=${spaces[random]}]`).addClass(aiPlayer.toLowerCase())
+    store.game.game.cells.splice(spaces[random], 1, aiPlayer)
+  }
+  const gameWon = checkWin(store.game.game.cells, aiPlayer)
+  if (gameWon) {
+    gameOver(gameWon)
+  } else {
+    checkDraw()
+    if (store.game.game.over === false) {
+      changeTurn()
+    }
   }
 }
 
 function hardAiMove () {
-  console.log(bestSpot())
-  $(`#${bestSpot()}`).text(aiPlayer)
-  $(`#${bestSpot()}`).addClass(aiPlayer.toLowerCase())
-  store.game.game.cells.splice(bestSpot(), 1, aiPlayer)
+  const bestBox = bestSpot()
+  $(`#${bestBox}`).text(aiPlayer)
+  $(`#${bestBox}`).addClass(aiPlayer.toLowerCase())
+  store.game.game.cells.splice(bestBox, 1, aiPlayer)
   const gameWon = checkWin(store.game.game.cells, aiPlayer)
   if (gameWon) {
     gameOver(gameWon)
@@ -242,7 +222,7 @@ function minimax (newBoard, player) {
   return moves[bestMove]
 }
 
-const huMove = function (event) {
+function huMove (event) {
   event.preventDefault()
   // get the position in the aray that they moved to
   const position = event.target.id
@@ -275,7 +255,7 @@ const huMove = function (event) {
         changeTurn()
       }
     }
-  } else {
+  } else if (store.game.game.over === false) {
     $('#invalid-move-message').text('Invalid move')
   }
 }

@@ -45,7 +45,8 @@ const checkDraw = function () {
 const newGame = function (event) {
   event.preventDefault()
   store.gameType = 'pvp'
-  $('#player-2-label').text('Player 2')
+  $('#player-2-label').text('Player 2: O')
+  $('#player-1-label').text('Player 1: X')
   $('#right-box').addClass('player-box Randometric-box Mechanico-box Minimaximus-box')
   $('#left-box').addClass('player-box Randometric-box Mechanico-box Minimaximus-box')
   $('#right-box').removeClass('player-box Randometric-box Mechanico-box Minimaximus-box')
